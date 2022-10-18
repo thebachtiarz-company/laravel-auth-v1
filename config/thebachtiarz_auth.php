@@ -46,4 +46,15 @@ return [
     |
     */
     'migration_files_remove' => ['create_users_table'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Use route REST API
+    |--------------------------------------------------------------------------
+    |
+    | Here are list the configuration for enable/disable REST API for auth.
+    | If you prefer to use your own route, we suggest to disable it.
+    |
+    */
+    'route_service' => true,
 ];
