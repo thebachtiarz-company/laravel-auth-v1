@@ -11,7 +11,7 @@ return [
     | example: email
     |
     */
-    'user_auth_identity_method' => "username",
+    'user_auth_identity_method' => "email",
 
     /*
     |--------------------------------------------------------------------------

@@ -20,9 +20,7 @@ class User extends Authenticatable implements UserModelInterface
      *
      * @var array
      */
-    protected $fillable = tbauthconfig('user_auth_identity_method') === 'email'
-        ? UserModelInterface::USER_ATTRIBUTES_EMAIL_IDENTITY
-        : UserModelInterface::USER_ATTRIBUTES_USERNAME_IDENTITY;
+    protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -32,6 +30,18 @@ class User extends Authenticatable implements UserModelInterface
     protected $hidden = [
         'password'
     ];
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->fillable = tbauthconfig('user_auth_identity_method') === 'email'
+            ? UserModelInterface::USER_ATTRIBUTES_EMAIL_IDENTITY
+            : UserModelInterface::USER_ATTRIBUTES_USERNAME_IDENTITY;
+    }
 
     // ? Getter Modules
     /**
