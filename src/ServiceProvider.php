@@ -3,6 +3,7 @@
 namespace TheBachtiarz\Auth;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use TheBachtiarz\Auth\Helpers\MigrationHelper;
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
 use TheBachtiarz\Auth\Providers\AppsProvider;
 
@@ -31,16 +32,16 @@ class ServiceProvider extends LaravelServiceProvider
                 __DIR__ . '/../config/' . AuthConfigInterface::AUTH_CONFIG_NAME . '.php' => config_path(AuthConfigInterface::AUTH_CONFIG_NAME . '.php'),
             ], 'thebachtiarz-auth-config');
 
+            if (tbauthconfig('migration_remove_status')) {
+                $_migrationHelper = new MigrationHelper;
 
-            // if (tbauthconfig('migration_remove_status')) {
-            //     (new MigrationHelper)->removeMigrationFiles();
+                $_migrationHelper->removeMigrationFiles();
+                $_migrationHelper->disableMigrationStatus();
 
-            //     // set 'migration_remove_status' to false
-
-            //     $this->publishes([
-            //         __DIR__ . '/../database/migrations' => database_path('migrations'),
-            //     ], 'thebachtiarz-auth-migrations');
-            // }
+                $this->publishes([
+                    __DIR__ . '/../database/migrations' => database_path('migrations'),
+                ], 'thebachtiarz-auth-migrations');
+            }
         }
     }
 }

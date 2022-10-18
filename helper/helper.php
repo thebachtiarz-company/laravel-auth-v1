@@ -1,7 +1,7 @@
 <?php
 
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
-use TheBachtiarz\Auth\Model\User;
+use TheBachtiarz\Auth\Models\User;
 
 /**
  * TheBachtiarz auth config
