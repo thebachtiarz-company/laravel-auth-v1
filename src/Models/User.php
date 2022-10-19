@@ -36,6 +36,13 @@ class User extends Authenticatable implements UserModelInterface
     protected self $classModel;
 
     /**
+     * Define token expires at
+     *
+     * @var string|null
+     */
+    protected ?string $tokenExpiresAt = null;
+
+    /**
      * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
@@ -96,6 +103,14 @@ class User extends Authenticatable implements UserModelInterface
         return $this->classModel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getTokenExpiresAt(): ?string
+    {
+        return $this->tokenExpiresAt;
+    }
+
     // ? Setter Modules
     /**
      * {@inheritDoc}
@@ -153,6 +168,16 @@ class User extends Authenticatable implements UserModelInterface
     public function setClassModel(User $user): self
     {
         $this->classModel = $user;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTokenExpiresAt(string $tokenExpiresAt): self
+    {
+        $this->tokenExpiresAt = $tokenExpiresAt;
 
         return $this;
     }

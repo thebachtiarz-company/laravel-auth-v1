@@ -77,6 +77,13 @@ interface UserModelInterface
      */
     public function getClassModel(): User;
 
+    /**
+     * Get token expires at
+     *
+     * @return string|null
+     */
+    public function getTokenExpiresAt(): ?string;
+
     // ? Setter Modules
     /**
      * Set id
@@ -126,4 +133,12 @@ interface UserModelInterface
      * @return self
      */
     public function setClassModel(User $user): self;
+
+    /**
+     * Set token expires at
+     *
+     * @param string $tokenExpiresAt Determine token expiration time
+     * @return self
+     */
+    public function setTokenExpiresAt(string $tokenExpiresAt): self;
 }
