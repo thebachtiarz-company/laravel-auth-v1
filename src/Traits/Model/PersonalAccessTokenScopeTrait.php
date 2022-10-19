@@ -3,6 +3,8 @@
 namespace TheBachtiarz\Auth\Traits\Model;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Models\User;
 
 /**
@@ -43,7 +45,10 @@ trait PersonalAccessTokenScopeTrait
      */
     public function scopeGetOwnTokenByName(Builder $builder, User $user, string $tokenName): Builder
     {
-        return $builder->getOwnTokens($user, ['name' => $tokenName]);
+        return $builder->getOwnTokens(
+            $user,
+            [DB::raw("BINARY `" . PersonalAccessTokenInterface::PAT_ATTRIBUTE_NAME . "`") => $tokenName]
+        );
     }
 
     // ? Private Methods
@@ -55,13 +60,12 @@ trait PersonalAccessTokenScopeTrait
      */
     private function whereConditionResolver(array $whereConditionCustom = []): array
     {
-        $merge = array_merge(
+        return array_merge(
             [
-                'tokenable_type' => tbauthconfig('child_model_user_class') ?: User::class,
+                'tokenable_type' => $this->user->getClassModel(),
                 'tokenable_id' => $this->user->id
             ],
             $whereConditionCustom
         );
-        return $merge;
     }
 }

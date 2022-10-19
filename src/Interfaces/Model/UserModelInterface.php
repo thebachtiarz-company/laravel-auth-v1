@@ -2,25 +2,27 @@
 
 namespace TheBachtiarz\Auth\Interfaces\Model;
 
+use TheBachtiarz\Auth\Models\User;
+
 interface UserModelInterface
 {
     /**
-     * Model attributes for email identity
+     * Model attributes for email identity fillable
      *
      * @var array
      */
-    public const USER_ATTRIBUTES_EMAIL_IDENTITY = [
+    public const USER_ATTRIBUTES_EMAIL_IDENTITY_FILLABLE = [
         self::USER_ATTRIBUTE_EMAIL,
         self::USER_ATTRIBUTE_EMAIL_VERIFIED_AT,
         self::USER_ATTRIBUTE_PASSWORD
     ];
 
     /**
-     * Model attributes for username identity
+     * Model attributes for username identity fillable
      *
      * @var array
      */
-    public const USER_ATTRIBUTES_USERNAME_IDENTITY = [
+    public const USER_ATTRIBUTES_USERNAME_IDENTITY_FILLABLE = [
         self::USER_ATTRIBUTE_USERNAME,
         self::USER_ATTRIBUTE_PASSWORD
     ];
@@ -67,6 +69,14 @@ interface UserModelInterface
      */
     public function getPassword(): ?string;
 
+    /**
+     * Get defined user class model.
+     * Override purposes.
+     *
+     * @return User
+     */
+    public function getClassModel(): User;
+
     // ? Setter Modules
     /**
      * Set id
@@ -107,4 +117,13 @@ interface UserModelInterface
      * @return self
      */
     public function setPassword(string $password): self;
+
+    /**
+     * Define user class model.
+     * Override purposes.
+     *
+     * @param User $user
+     * @return self
+     */
+    public function setClassModel(User $user): self;
 }

@@ -1,7 +1,7 @@
 <?php
 
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
-use TheBachtiarz\Auth\Models\User;
+use TheBachtiarz\Auth\Interfaces\Model\UserModelInterface;
 
 /**
  * TheBachtiarz auth config
@@ -29,30 +29,13 @@ function tbauthrouteapi(): string
 }
 
 /**
- * Get default/override User Model class
+ * Get User model fillable
  *
- * @return string
+ * @return array
  */
-function tbauthgetusermodel(): string
+function tbauthmodeluserfillables(): array
 {
-    $_defaultClass = User::class;
-
-    try {
-        throw_if(
-            !tbauthconfig('child_model_user_class'),
-            'Exception',
-            sprintf("No override '%s' class defined, assume use default '%s' class", $_defaultClass, $_defaultClass)
-        );
-
-        throw_if(
-            !class_exists(tbauthconfig('child_model_user_class')),
-            'Exception',
-            sprintf("Class '%s' is not defined", tbauthconfig('child_model_user_class'))
-        );
-
-        $_defaultClass = tbauthconfig('child_model_user_class');
-    } catch (\Throwable $th) {
-    } finally {
-        return $_defaultClass;
-    }
+    return tbauthconfig('user_auth_identity_method') === 'email'
+        ? UserModelInterface::USER_ATTRIBUTES_EMAIL_IDENTITY_FILLABLE
+        : UserModelInterface::USER_ATTRIBUTES_USERNAME_IDENTITY_FILLABLE;
 }

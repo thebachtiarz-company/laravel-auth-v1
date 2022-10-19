@@ -15,18 +15,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Class Model User Child
-    |--------------------------------------------------------------------------
-    |
-    | Define the child class which extending the "TheBachtiarz\Auth\Model\User::class".
-    | example: "App\Models\User" or \App\Models\User::class.
-    | Leave null if not using child class.
-    |
-    */
-    'child_model_user_class' => null,
-
-    /*
-    |--------------------------------------------------------------------------
     | Migration status removal
     |--------------------------------------------------------------------------
     |

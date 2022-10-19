@@ -16,20 +16,24 @@ class User extends Authenticatable implements UserModelInterface
     use UserScopeTrait;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * {@inheritDoc}
      */
     protected $fillable = [];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * {@inheritDoc}
      */
     protected $hidden = [
         'password'
     ];
+
+    /**
+     * Define class model.
+     * Override purposes.
+     *
+     * @var self
+     */
+    protected self $classModel;
 
     /**
      * {@inheritDoc}
@@ -38,9 +42,9 @@ class User extends Authenticatable implements UserModelInterface
     {
         parent::__construct($attributes);
 
-        $this->fillable = tbauthconfig('user_auth_identity_method') === 'email'
-            ? UserModelInterface::USER_ATTRIBUTES_EMAIL_IDENTITY
-            : UserModelInterface::USER_ATTRIBUTES_USERNAME_IDENTITY;
+        $this->classModel = $this;
+
+        $this->fillable = tbauthmodeluserfillables();
     }
 
     // ? Getter Modules
@@ -82,6 +86,14 @@ class User extends Authenticatable implements UserModelInterface
     public function getPassword(): ?string
     {
         return $this->__get(UserModelInterface::USER_ATTRIBUTE_PASSWORD);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getClassModel(): User
+    {
+        return $this->classModel;
     }
 
     // ? Setter Modules
@@ -131,6 +143,16 @@ class User extends Authenticatable implements UserModelInterface
     public function setPassword(string $password): self
     {
         $this->__set(UserModelInterface::USER_ATTRIBUTE_PASSWORD, $password);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setClassModel(User $user): self
+    {
+        $this->classModel = $user;
 
         return $this;
     }
