@@ -15,24 +15,6 @@ class PersonalAccessTokenRepository
 {
     //
 
-    /**
-     * User model
-     *
-     * @var User
-     */
-    protected User $user;
-
-    /**
-     * Constructor
-     *
-     * @param User $user
-     */
-    public function __construct(
-        User $user
-    ) {
-        $this->user = $user;
-    }
-
     // ? Public Methods
     /**
      * Get current auth tokens
@@ -70,15 +52,16 @@ class PersonalAccessTokenRepository
     /**
      * Create a new token
      *
+     * @param User $user
      * @return NewAccessToken
      */
-    public function create(): NewAccessToken
+    public function create(User $user): NewAccessToken
     {
         $this->authenticate();
 
-        $_create = $this->user->createToken(
+        $_create = $user->createToken(
             name: Str::uuid()->toString(),
-            expiresAt: $this->user->getTokenExpiresAt()
+            expiresAt: $user->getTokenExpiresAt()
         );
 
         return $_create;
