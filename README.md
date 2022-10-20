@@ -22,12 +22,9 @@ composer require thebachtiarz-company/laravel-auth-v1
 php artisan vendor:publish --provider="TheBachtiarz\Auth\ServiceProvider"
 ```
 
-- register the REST API into -> **app/Providers/RouteServiceProvider.php**
-```bash
-Route::prefix(tbtoolkitconfig('app_prefix'))
-    ->middleware(['api'])
-    ->namespace($this->namespace)
-    ->group(tbauthrouteapi());
+- database migration
+``` bash
+php artisan migrate
 ```
 
 -------

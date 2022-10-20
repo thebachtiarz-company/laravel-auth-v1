@@ -5,6 +5,7 @@ namespace TheBachtiarz\Auth\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use TheBachtiarz\Auth\Interfaces\Model\UserModelInterface;
 use TheBachtiarz\Auth\Traits\Model\UserScopeTrait;
@@ -38,9 +39,9 @@ class User extends Authenticatable implements UserModelInterface
     /**
      * Define token expires at
      *
-     * @var string|null
+     * @var Carbon|null
      */
-    protected ?string $tokenExpiresAt = null;
+    protected ?Carbon $tokenExpiresAt = null;
 
     /**
      * {@inheritDoc}
@@ -106,7 +107,7 @@ class User extends Authenticatable implements UserModelInterface
     /**
      * {@inheritDoc}
      */
-    public function getTokenExpiresAt(): ?string
+    public function getTokenExpiresAt(): ?Carbon
     {
         return $this->tokenExpiresAt;
     }
@@ -175,7 +176,7 @@ class User extends Authenticatable implements UserModelInterface
     /**
      * {@inheritDoc}
      */
-    public function setTokenExpiresAt(string $tokenExpiresAt): self
+    public function setTokenExpiresAt(Carbon $tokenExpiresAt): self
     {
         $this->tokenExpiresAt = $tokenExpiresAt;
 

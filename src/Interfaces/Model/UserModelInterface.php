@@ -2,6 +2,7 @@
 
 namespace TheBachtiarz\Auth\Interfaces\Model;
 
+use Illuminate\Support\Carbon;
 use TheBachtiarz\Auth\Models\User;
 
 interface UserModelInterface
@@ -80,9 +81,9 @@ interface UserModelInterface
     /**
      * Get token expires at
      *
-     * @return string|null
+     * @return Carbon|null
      */
-    public function getTokenExpiresAt(): ?string;
+    public function getTokenExpiresAt(): ?Carbon;
 
     // ? Setter Modules
     /**
@@ -137,8 +138,8 @@ interface UserModelInterface
     /**
      * Set token expires at
      *
-     * @param string $tokenExpiresAt Determine token expiration time
+     * @param Carbon $tokenExpiresAt Determine token expiration time
      * @return self
      */
-    public function setTokenExpiresAt(string $tokenExpiresAt): self;
+    public function setTokenExpiresAt(Carbon $tokenExpiresAt): self;
 }

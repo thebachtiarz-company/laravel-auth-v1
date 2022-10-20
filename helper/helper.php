@@ -19,16 +19,6 @@ function tbauthconfig(?string $keyName = null): mixed
 }
 
 /**
- * TheBachtiarz auth route api file location
- *
- * @return string
- */
-function tbauthrouteapi(): string
-{
-    return base_path('vendor/thebachtiarz-company/laravel-auth-v1/src/routes/auth_api.php');
-}
-
-/**
  * Get User model fillable
  *
  * @return array
