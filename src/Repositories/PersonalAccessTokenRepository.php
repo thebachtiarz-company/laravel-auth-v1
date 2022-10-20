@@ -29,7 +29,7 @@ class PersonalAccessTokenRepository
 
         if (!$_collection->count()) throw new ModelNotFoundException("There is no tokens for current auth");
 
-        return $_collection;
+        return $_collection->get();
     }
 
     /**

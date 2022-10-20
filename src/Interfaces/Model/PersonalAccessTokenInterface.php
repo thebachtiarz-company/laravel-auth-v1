@@ -2,6 +2,8 @@
 
 namespace TheBachtiarz\Auth\Interfaces\Model;
 
+use Illuminate\Support\Carbon;
+
 interface PersonalAccessTokenInterface
 {
     /**
@@ -64,23 +66,23 @@ interface PersonalAccessTokenInterface
     /**
      * Get abilities
      *
-     * @return string|null
+     * @return array|null
      */
-    public function getAbilities(): ?string;
+    public function getAbilities(): ?array;
 
     /**
      * Get last used at
      *
-     * @return string|null
+     * @return Carbon|null
      */
-    public function getLastUsedAt(): ?string;
+    public function getLastUsedAt(): ?Carbon;
 
     /**
      * Get expires at
      *
-     * @return string|null
+     * @return Carbon|null
      */
-    public function getExpiresAt(): ?string;
+    public function getExpiresAt(): ?Carbon;
 
     // ? Setter Modules
     /**
@@ -126,24 +128,24 @@ interface PersonalAccessTokenInterface
     /**
      * Set abilities
      *
-     * @param string $abilities
+     * @param array $abilities
      * @return self
      */
-    public function setAbilities(string $abilities): self;
+    public function setAbilities(array $abilities): self;
 
     /**
      * Set last used at
      *
-     * @param string $lastUsedAt
+     * @param Carbon $lastUsedAt
      * @return self
      */
-    public function setLastUsedAt(string $lastUsedAt): self;
+    public function setLastUsedAt(Carbon $lastUsedAt): self;
 
     /**
      * Set expires at
      *
-     * @param string $expiresAt
+     * @param Carbon $expiresAt
      * @return self
      */
-    public function setExpiresAt(string $expiresAt): self;
+    public function setExpiresAt(Carbon $expiresAt): self;
 }

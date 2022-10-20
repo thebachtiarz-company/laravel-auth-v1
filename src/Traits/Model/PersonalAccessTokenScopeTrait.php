@@ -3,7 +3,6 @@
 namespace TheBachtiarz\Auth\Traits\Model;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Models\User;
 
@@ -47,7 +46,7 @@ trait PersonalAccessTokenScopeTrait
     {
         return $builder->getOwnTokens(
             $user,
-            [DB::raw("BINARY `" . PersonalAccessTokenInterface::PAT_ATTRIBUTE_NAME . "`") => $tokenName]
+            [PersonalAccessTokenInterface::PAT_ATTRIBUTE_NAME => $tokenName]
         );
     }
 
@@ -62,7 +61,7 @@ trait PersonalAccessTokenScopeTrait
     {
         return array_merge(
             [
-                'tokenable_type' => $this->user->getClassModel(),
+                'tokenable_type' => $this->user->getClassModel()::class,
                 'tokenable_id' => $this->user->id
             ],
             $whereConditionCustom

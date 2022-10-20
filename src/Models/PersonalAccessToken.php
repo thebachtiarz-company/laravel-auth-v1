@@ -2,6 +2,7 @@
 
 namespace TheBachtiarz\Auth\Models;
 
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Traits\Model\PersonalAccessTokenMapTrait;
@@ -68,7 +69,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    public function getAbilities(): ?string
+    public function getAbilities(): ?array
     {
         return $this->__get(PersonalAccessTokenInterface::PAT_ATTRIBUTE_ABILITIES);
     }
@@ -76,7 +77,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    public function getLastUsedAt(): ?string
+    public function getLastUsedAt(): ?Carbon
     {
         return $this->__get(PersonalAccessTokenInterface::PAT_ATTRIBUTE_LASTUSEDAT);
     }
@@ -84,7 +85,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    public function getExpiresAt(): ?string
+    public function getExpiresAt(): ?Carbon
     {
         return $this->__get(PersonalAccessTokenInterface::PAT_ATTRIBUTE_EXPIRESAT);
     }
@@ -143,7 +144,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    public function setAbilities(string $abilities): self
+    public function setAbilities(array $abilities): self
     {
         $this->__set(PersonalAccessTokenInterface::PAT_ATTRIBUTE_ABILITIES, $abilities);
 
@@ -153,7 +154,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    public function setLastUsedAt(string $lastUsedAt): self
+    public function setLastUsedAt(Carbon $lastUsedAt): self
     {
         $this->__set(PersonalAccessTokenInterface::PAT_ATTRIBUTE_LASTUSEDAT, $lastUsedAt);
 
@@ -163,7 +164,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    public function setExpiresAt(string $expiresAt): self
+    public function setExpiresAt(Carbon $expiresAt): self
     {
         $this->__set(PersonalAccessTokenInterface::PAT_ATTRIBUTE_EXPIRESAT, $expiresAt);
 
