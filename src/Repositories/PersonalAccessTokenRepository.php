@@ -81,7 +81,7 @@ class PersonalAccessTokenRepository
          */
         $_user = $this->user->getClassModel()::find(Auth::user()->id);
 
-        $_create = $_user->createToken(name: Str::uuid(), expiresAt: $this->user->getTokenExpiresAt());
+        $_create = $_user->createToken(name: Str::uuid()->toString(), expiresAt: $this->user->getTokenExpiresAt());
 
         return $_create;
     }
