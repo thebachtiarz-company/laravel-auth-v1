@@ -3,8 +3,8 @@
 
 -------
 ## Requires
-- [laravel/framework](https://github.com/laravel/framework/) v9.x
-- [thebachtiarz/laravel-toolkit-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/) v2.x
+- [laravel/framework](https://github.com/laravel/framework/) v^9.30
+- [thebachtiarz/laravel-toolkit-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/) v^2.x
 
 ## Installation
 - composer config (only if you have access)
