@@ -2,6 +2,7 @@
 
 namespace TheBachtiarz\Auth\Traits\Model;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -15,14 +16,15 @@ trait UserScopeTrait
     /**
      * Get by identifier
      *
+     * @param Builder $builder
      * @param string $identifier
-     * @return object|null
+     * @return Builder
      */
-    public function scopeGetByIdentifier($query, string $identifier): ?object
+    public function scopeGetByIdentifier(Builder $builder, string $identifier): Builder
     {
         $_identifier = tbauthconfig('user_auth_identity_method');
 
-        return $query->where(DB::raw("BINARY `$_identifier`"), $identifier);
+        return $builder->where(DB::raw("BINARY `$_identifier`"), $identifier);
     }
 
     // ? Private Methods

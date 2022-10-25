@@ -35,7 +35,7 @@ class UserRepository
     {
         $_data = [];
 
-        foreach (tbauthmodeluserfillables() as $key => $attribute) {
+        foreach ($user->getFillable() as $key => $attribute) {
             $_data[$attribute] = $user->__get($attribute);
         }
 
