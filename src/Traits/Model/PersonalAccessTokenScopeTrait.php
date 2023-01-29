@@ -46,7 +46,7 @@ trait PersonalAccessTokenScopeTrait
     {
         return $builder->getOwnTokens(
             $user,
-            [PersonalAccessTokenInterface::PAT_ATTRIBUTE_NAME => $tokenName]
+            [PersonalAccessTokenInterface::ATTRIBUTE_NAME => $tokenName]
         );
     }
 

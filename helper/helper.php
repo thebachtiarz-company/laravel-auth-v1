@@ -1,7 +1,7 @@
 <?php
 
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
-use TheBachtiarz\Auth\Interfaces\Model\UserModelInterface;
+use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 
 /**
  * TheBachtiarz auth config
@@ -26,6 +26,6 @@ function tbauthconfig(?string $keyName = null): mixed
 function tbauthmodeluserfillables(): array
 {
     return tbauthconfig('user_auth_identity_method') === 'email'
-        ? UserModelInterface::USER_ATTRIBUTES_EMAIL_IDENTITY_FILLABLE
-        : UserModelInterface::USER_ATTRIBUTES_USERNAME_IDENTITY_FILLABLE;
+        ? UserInterface::ATTRIBUTES_EMAIL_IDENTITY_FILLABLE
+        : UserInterface::ATTRIBUTES_USERNAME_IDENTITY_FILLABLE;
 }

@@ -15,7 +15,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
     /**
      * {@inheritDoc}
      */
-    protected $fillable = self::PAT_ATTRIBUTES_FILLABLE;
+    protected $fillable = self::ATTRIBUTES_FILLABLE;
 
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getId(): ?int
     {
-        return $this->__get(self::PAT_ATTRIBUTE_ID);
+        return $this->__get(self::ATTRIBUTE_ID);
     }
 
     /**
@@ -39,7 +39,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getTokenableType(): ?string
     {
-        return $this->__get(self::PAT_ATTRIBUTE_TOKENABLETYPE);
+        return $this->__get(self::ATTRIBUTE_TOKENABLETYPE);
     }
 
     /**
@@ -47,7 +47,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getTokenableId(): ?int
     {
-        return $this->__get(self::PAT_ATTRIBUTE_TOKENABLEID);
+        return $this->__get(self::ATTRIBUTE_TOKENABLEID);
     }
 
     /**
@@ -55,7 +55,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getName(): ?string
     {
-        return $this->__get(self::PAT_ATTRIBUTE_NAME);
+        return $this->__get(self::ATTRIBUTE_NAME);
     }
 
     /**
@@ -63,7 +63,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getToken(): ?string
     {
-        return $this->__get(self::PAT_ATTRIBUTE_TOKEN);
+        return $this->__get(self::ATTRIBUTE_TOKEN);
     }
 
     /**
@@ -71,7 +71,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getAbilities(): ?array
     {
-        return $this->__get(self::PAT_ATTRIBUTE_ABILITIES);
+        return $this->__get(self::ATTRIBUTE_ABILITIES);
     }
 
     /**
@@ -79,7 +79,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getLastUsedAt(): ?Carbon
     {
-        return $this->__get(self::PAT_ATTRIBUTE_LASTUSEDAT);
+        return $this->__get(self::ATTRIBUTE_LASTUSEDAT);
     }
 
     /**
@@ -87,7 +87,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function getExpiresAt(): ?Carbon
     {
-        return $this->__get(self::PAT_ATTRIBUTE_EXPIRESAT);
+        return $this->__get(self::ATTRIBUTE_EXPIRESAT);
     }
 
     // ? Setter Modules
@@ -96,7 +96,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setId(int $id): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_ID, $id);
+        $this->__set(self::ATTRIBUTE_ID, $id);
 
         return $this;
     }
@@ -106,7 +106,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setTokenableType(string $tokenableType): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_TOKENABLETYPE, $tokenableType);
+        $this->__set(self::ATTRIBUTE_TOKENABLETYPE, $tokenableType);
 
         return $this;
     }
@@ -116,7 +116,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setTokenableId(int $tokenableId): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_TOKENABLEID, $tokenableId);
+        $this->__set(self::ATTRIBUTE_TOKENABLEID, $tokenableId);
 
         return $this;
     }
@@ -126,7 +126,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setName(string $name): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_NAME, $name);
+        $this->__set(self::ATTRIBUTE_NAME, $name);
 
         return $this;
     }
@@ -136,7 +136,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setToken(string $token): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_TOKEN, $token);
+        $this->__set(self::ATTRIBUTE_TOKEN, $token);
 
         return $this;
     }
@@ -146,7 +146,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setAbilities(array $abilities): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_ABILITIES, $abilities);
+        $this->__set(self::ATTRIBUTE_ABILITIES, $abilities);
 
         return $this;
     }
@@ -156,7 +156,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setLastUsedAt(Carbon $lastUsedAt): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_LASTUSEDAT, $lastUsedAt);
+        $this->__set(self::ATTRIBUTE_LASTUSEDAT, $lastUsedAt);
 
         return $this;
     }
@@ -166,7 +166,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
      */
     public function setExpiresAt(Carbon $expiresAt): self
     {
-        $this->__set(self::PAT_ATTRIBUTE_EXPIRESAT, $expiresAt);
+        $this->__set(self::ATTRIBUTE_EXPIRESAT, $expiresAt);
 
         return $this;
     }

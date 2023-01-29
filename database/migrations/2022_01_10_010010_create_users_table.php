@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use TheBachtiarz\Auth\Interfaces\Model\UserModelInterface;
+use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
+use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 
 return new class extends Migration
 {
@@ -16,14 +17,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            if (tbauthconfig('user_auth_identity_method') === UserModelInterface::USER_ATTRIBUTE_EMAIL) {
-                $table->string(UserModelInterface::USER_ATTRIBUTE_EMAIL)->unique();
-                $table->timestamp(UserModelInterface::USER_ATTRIBUTE_EMAIL_VERIFIED_AT)->nullable();
+            if (tbauthconfig(AuthConfigInterface::AUTH_IDENTITY_METHOD) === UserInterface::ATTRIBUTE_EMAIL) {
+                $table->string(UserInterface::ATTRIBUTE_EMAIL)->unique();
+                $table->timestamp(UserInterface::ATTRIBUTE_EMAIL_VERIFIED_AT)->nullable();
             }
-            if (tbauthconfig('user_auth_identity_method') === UserModelInterface::USER_ATTRIBUTE_USERNAME) {
-                $table->string(UserModelInterface::USER_ATTRIBUTE_USERNAME)->unique();
+            if (tbauthconfig(AuthConfigInterface::AUTH_IDENTITY_METHOD) === UserInterface::ATTRIBUTE_USERNAME) {
+                $table->string(UserInterface::ATTRIBUTE_USERNAME)->unique();
             }
-            $table->string(UserModelInterface::USER_ATTRIBUTE_PASSWORD);
+            $table->string(UserInterface::ATTRIBUTE_PASSWORD);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

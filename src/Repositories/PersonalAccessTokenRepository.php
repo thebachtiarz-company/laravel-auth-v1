@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
+use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
+use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Auth\Models\User;
 
-class PersonalAccessTokenRepository
+class PersonalAccessTokenRepository extends AbstractRepository
 {
     //
 
@@ -19,7 +21,7 @@ class PersonalAccessTokenRepository
     /**
      * Get current auth tokens
      *
-     * @return Collection<PersonalAccessToken>
+     * @return Collection<PersonalAccessTokenInterface>
      */
     public function get(): Collection
     {
@@ -36,9 +38,9 @@ class PersonalAccessTokenRepository
      * Get token by name
      *
      * @param string $tokenName
-     * @return PersonalAccessToken
+     * @return PersonalAccessTokenInterface
      */
-    public function getByName(string $tokenName): PersonalAccessToken
+    public function getByName(string $tokenName): PersonalAccessTokenInterface
     {
         $this->authenticate();
 
@@ -52,16 +54,17 @@ class PersonalAccessTokenRepository
     /**
      * Create a new token
      *
-     * @param User $user
+     * @param UserInterface $userInterface
      * @return NewAccessToken
      */
-    public function create(User $user): NewAccessToken
+    public function create(UserInterface $userInterface): NewAccessToken
     {
         $this->authenticate();
 
-        $_create = $user->createToken(
+        /** @var User $userInterface */
+        $_create = $userInterface->createToken(
             name: Str::uuid()->toString(),
-            expiresAt: $user->getTokenExpiresAt()
+            expiresAt: $userInterface->getTokenExpiresAt()
         );
 
         return $_create;
@@ -71,21 +74,24 @@ class PersonalAccessTokenRepository
      * Delete token by name
      *
      * @param string $tokenName
-     * @return boolean|null
+     * @return boolean
      */
-    public function deleteByName(string $tokenName): ?bool
+    public function deleteByName(string $tokenName): bool
     {
-        return $this->getByName($tokenName)->delete();
+        /** @var PersonalAccessToken $_token */
+        $_token = $this->getByName($tokenName);
+
+        return $_token->delete();
     }
 
-    // ? Private Methods
+    // ? Protected Methods
     /**
      * Check is authenticated
      *
      * @return void
      * @throws AuthenticationException
      */
-    private function authenticate(): void
+    protected function authenticate(): void
     {
         if (!Auth::hasUser()) throw new AuthenticationException();
     }

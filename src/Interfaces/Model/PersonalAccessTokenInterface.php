@@ -11,21 +11,21 @@ interface PersonalAccessTokenInterface
      *
      * @var array
      */
-    public const PAT_ATTRIBUTES_FILLABLE = [
-        self::PAT_ATTRIBUTE_NAME,
-        self::PAT_ATTRIBUTE_TOKEN,
-        self::PAT_ATTRIBUTE_ABILITIES,
-        self::PAT_ATTRIBUTE_EXPIRESAT
+    public const ATTRIBUTES_FILLABLE = [
+        self::ATTRIBUTE_NAME,
+        self::ATTRIBUTE_TOKEN,
+        self::ATTRIBUTE_ABILITIES,
+        self::ATTRIBUTE_EXPIRESAT
     ];
 
-    public const PAT_ATTRIBUTE_ID = 'id';
-    public const PAT_ATTRIBUTE_TOKENABLETYPE = 'tokenable_type';
-    public const PAT_ATTRIBUTE_TOKENABLEID = 'tokenable_id';
-    public const PAT_ATTRIBUTE_NAME = 'name';
-    public const PAT_ATTRIBUTE_TOKEN = 'token';
-    public const PAT_ATTRIBUTE_ABILITIES = 'abilities';
-    public const PAT_ATTRIBUTE_LASTUSEDAT = 'last_used_at';
-    public const PAT_ATTRIBUTE_EXPIRESAT = 'expires_at';
+    public const ATTRIBUTE_ID = 'id';
+    public const ATTRIBUTE_TOKENABLETYPE = 'tokenable_type';
+    public const ATTRIBUTE_TOKENABLEID = 'tokenable_id';
+    public const ATTRIBUTE_NAME = 'name';
+    public const ATTRIBUTE_TOKEN = 'token';
+    public const ATTRIBUTE_ABILITIES = 'abilities';
+    public const ATTRIBUTE_LASTUSEDAT = 'last_used_at';
+    public const ATTRIBUTE_EXPIRESAT = 'expires_at';
 
     // ? Getter Modules
     /**

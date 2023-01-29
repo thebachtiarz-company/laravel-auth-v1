@@ -25,22 +25,22 @@ trait PersonalAccessTokenMapTrait
          */
 
         $_data = [
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_ID => $this->getId(),
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_TOKENABLETYPE => $this->getTokenableType(),
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_TOKENABLEID => $this->getTokenableId(),
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_NAME => $this->getName(),
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_TOKEN => $this->getToken(),
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_ABILITIES => $this->getAbilities(),
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_LASTUSEDAT => $this->getLastUsedAt() ? self::anyConvDateToTimestamp($this->getLastUsedAt()) : '',
-            PersonalAccessTokenInterface::PAT_ATTRIBUTE_EXPIRESAT => $this->getExpiresAt() ? self::anyConvDateToTimestamp($this->getExpiresAt()) : 'Never',
+            PersonalAccessTokenInterface::ATTRIBUTE_ID => $this->getId(),
+            PersonalAccessTokenInterface::ATTRIBUTE_TOKENABLETYPE => $this->getTokenableType(),
+            PersonalAccessTokenInterface::ATTRIBUTE_TOKENABLEID => $this->getTokenableId(),
+            PersonalAccessTokenInterface::ATTRIBUTE_NAME => $this->getName(),
+            PersonalAccessTokenInterface::ATTRIBUTE_TOKEN => $this->getToken(),
+            PersonalAccessTokenInterface::ATTRIBUTE_ABILITIES => $this->getAbilities(),
+            PersonalAccessTokenInterface::ATTRIBUTE_LASTUSEDAT => $this->getLastUsedAt() ? self::anyConvDateToTimestamp($this->getLastUsedAt()) : '',
+            PersonalAccessTokenInterface::ATTRIBUTE_EXPIRESAT => $this->getExpiresAt() ? self::anyConvDateToTimestamp($this->getExpiresAt()) : 'Never',
             'created_at' => self::anyConvDateToTimestamp($this->created_at)
         ];
 
         $_result = [];
 
-        foreach ($return as $key => $collect) {
+        foreach ($return as $key => $attribute) {
             try {
-                $_result[$collect] = $_data[$collect];
+                $_result[$attribute] = $_data[$attribute];
             } catch (\Throwable $th) {
             }
         }

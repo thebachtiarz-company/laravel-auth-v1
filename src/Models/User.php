@@ -7,10 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
-use TheBachtiarz\Auth\Interfaces\Model\UserModelInterface;
+use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Traits\Model\UserScopeTrait;
 
-class User extends Authenticatable implements UserModelInterface
+class User extends Authenticatable implements UserInterface
 {
     use HasApiTokens, Notifiable, SoftDeletes;
 
@@ -49,9 +49,7 @@ class User extends Authenticatable implements UserModelInterface
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-
         $this->classModel = $this;
-
         $this->fillable($this->mutateFillable());
     }
 
@@ -72,7 +70,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function getId(): ?int
     {
-        return $this->__get(self::USER_ATTRIBUTE_ID);
+        return $this->__get(self::ATTRIBUTE_ID);
     }
 
     /**
@@ -80,7 +78,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function getEmail(): ?string
     {
-        return $this->__get(self::USER_ATTRIBUTE_EMAIL);
+        return $this->__get(self::ATTRIBUTE_EMAIL);
     }
 
     /**
@@ -88,7 +86,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function getEmailVerifiedAt(): ?string
     {
-        return $this->__get(self::USER_ATTRIBUTE_EMAIL_VERIFIED_AT);
+        return $this->__get(self::ATTRIBUTE_EMAIL_VERIFIED_AT);
     }
 
     /**
@@ -96,7 +94,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function getUsername(): ?string
     {
-        return $this->__get(self::USER_ATTRIBUTE_USERNAME);
+        return $this->__get(self::ATTRIBUTE_USERNAME);
     }
 
     /**
@@ -104,7 +102,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function getPassword(): ?string
     {
-        return $this->__get(self::USER_ATTRIBUTE_PASSWORD);
+        return $this->__get(self::ATTRIBUTE_PASSWORD);
     }
 
     /**
@@ -129,7 +127,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function setId(int $id): self
     {
-        $this->__set(self::USER_ATTRIBUTE_ID, $id);
+        $this->__set(self::ATTRIBUTE_ID, $id);
 
         return $this;
     }
@@ -139,7 +137,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function setEmail(string $email): self
     {
-        $this->__set(self::USER_ATTRIBUTE_EMAIL, $email);
+        $this->__set(self::ATTRIBUTE_EMAIL, $email);
 
         return $this;
     }
@@ -149,7 +147,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function setEmailVerifiedAt(string $emailVerifiedAt): self
     {
-        $this->__set(self::USER_ATTRIBUTE_EMAIL_VERIFIED_AT, $emailVerifiedAt);
+        $this->__set(self::ATTRIBUTE_EMAIL_VERIFIED_AT, $emailVerifiedAt);
 
         return $this;
     }
@@ -159,7 +157,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function setUsername(string $username): self
     {
-        $this->__set(self::USER_ATTRIBUTE_USERNAME, $username);
+        $this->__set(self::ATTRIBUTE_USERNAME, $username);
 
         return $this;
     }
@@ -169,7 +167,7 @@ class User extends Authenticatable implements UserModelInterface
      */
     public function setPassword(string $password): self
     {
-        $this->__set(self::USER_ATTRIBUTE_PASSWORD, $password);
+        $this->__set(self::ATTRIBUTE_PASSWORD, $password);
 
         return $this;
     }

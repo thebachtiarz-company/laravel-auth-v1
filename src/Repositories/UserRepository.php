@@ -3,9 +3,10 @@
 namespace TheBachtiarz\Auth\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Models\User;
 
-class UserRepository
+class UserRepository extends AbstractRepository
 {
     //
 
@@ -14,9 +15,9 @@ class UserRepository
      * Get user by id
      *
      * @param integer $id
-     * @return User
+     * @return UserInterface
      */
-    public function getById(int $id): User
+    public function getById(int $id): UserInterface
     {
         $_user = User::find($id);
 
@@ -28,18 +29,15 @@ class UserRepository
     /**
      * Create new user
      *
-     * @param User $user
-     * @return User
+     * @param UserInterface $userInterface
+     * @return UserInterface
      */
-    public function create(User $user): User
+    public function create(UserInterface $userInterface): UserInterface
     {
-        $_data = [];
+        /** @var User $userInterface */
 
-        foreach ($user->getFillable() as $key => $attribute) {
-            $_data[$attribute] = $user->__get($attribute);
-        }
-
-        $_create = User::create($_data);
+        /** @var User $_create */
+        $_create = $this->createFromModel($userInterface);
 
         if (!$_create) throw new ModelNotFoundException("Failed to create new user");
 
@@ -49,16 +47,19 @@ class UserRepository
     /**
      * Update current user
      *
-     * @param User $user
-     * @return User
+     * @param UserInterface $userInterface
+     * @return UserInterface
      */
-    public function save(User $user): User
+    public function save(UserInterface $userInterface): UserInterface
     {
-        $_user = $user->save();
+        /** @var User $userInterface */
+
+        /** @var User $_user */
+        $_user = $userInterface->save();
 
         if (!$_user) throw new ModelNotFoundException("Failed to save current user");
 
-        return $user;
+        return $userInterface;
     }
 
     /**
@@ -69,13 +70,10 @@ class UserRepository
      */
     public function deleteById(int $id): bool
     {
+        /** @var User $_user */
         $_user = $this->getById($id);
 
-        $_delete = $_user->delete();
-
-        if (!$_delete) throw new ModelNotFoundException("Failed to delete user with id '$id'");
-
-        return $_delete;
+        return $_user->delete();
     }
 
     // ? Private Methods
