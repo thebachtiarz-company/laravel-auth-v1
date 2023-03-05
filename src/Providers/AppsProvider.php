@@ -13,32 +13,16 @@ class AppsProvider
     /**
      * Register config
      *
-     * @return boolean
+     * @return void
      */
-    public function registerConfig(): bool
+    public function registerConfig(): void
     {
-        try {
-            foreach (DataProvider::registerConfig() as $key => $register) {
-                config($register);
-            }
+        $container = \Illuminate\Container\Container::getInstance();
 
-            return true;
-        } catch (\Throwable $th) {
-            return false;
-        }
-    }
+        /** @var DataProvider $_dataProvider */
+        $_dataProvider = $container->make(DataProvider::class);
 
-    /**
-     * Register commands
-     *
-     * @return array
-     */
-    public function registerCommands(): array
-    {
-        try {
-            return self::COMMANDS;
-        } catch (\Throwable $th) {
-            return [];
-        }
+        foreach ($_dataProvider->registerConfig() as $key => $register)
+            config($register);
     }
 }

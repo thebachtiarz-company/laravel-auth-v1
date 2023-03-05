@@ -17,11 +17,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            if (tbauthconfig(AuthConfigInterface::AUTH_IDENTITY_METHOD) === UserInterface::ATTRIBUTE_EMAIL) {
+            if (tbauthconfig(AuthConfigInterface::IDENTITY_METHOD) === UserInterface::ATTRIBUTE_EMAIL) {
                 $table->string(UserInterface::ATTRIBUTE_EMAIL)->unique();
                 $table->timestamp(UserInterface::ATTRIBUTE_EMAIL_VERIFIED_AT)->nullable();
             }
-            if (tbauthconfig(AuthConfigInterface::AUTH_IDENTITY_METHOD) === UserInterface::ATTRIBUTE_USERNAME) {
+            if (tbauthconfig(AuthConfigInterface::IDENTITY_METHOD) === UserInterface::ATTRIBUTE_USERNAME) {
                 $table->string(UserInterface::ATTRIBUTE_USERNAME)->unique();
             }
             $table->string(UserInterface::ATTRIBUTE_PASSWORD);

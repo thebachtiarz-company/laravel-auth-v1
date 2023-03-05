@@ -12,6 +12,7 @@ use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Auth\Models\User;
+use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 
 class PersonalAccessTokenRepository extends AbstractRepository
 {

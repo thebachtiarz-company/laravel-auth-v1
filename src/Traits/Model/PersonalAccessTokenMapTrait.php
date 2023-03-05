@@ -4,14 +4,14 @@ namespace TheBachtiarz\Auth\Traits\Model;
 
 use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
 use TheBachtiarz\Auth\Models\PersonalAccessToken;
-use TheBachtiarz\Toolkit\Helper\App\Carbon\CarbonHelper;
+use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 
 /**
  * Personal Access Token Map Trait
  */
 trait PersonalAccessTokenMapTrait
 {
-    use CarbonHelper;
+    // 
 
     /**
      * Personal access token simple list map
@@ -31,9 +31,9 @@ trait PersonalAccessTokenMapTrait
             PersonalAccessTokenInterface::ATTRIBUTE_NAME => $this->getName(),
             PersonalAccessTokenInterface::ATTRIBUTE_TOKEN => $this->getToken(),
             PersonalAccessTokenInterface::ATTRIBUTE_ABILITIES => $this->getAbilities(),
-            PersonalAccessTokenInterface::ATTRIBUTE_LASTUSEDAT => $this->getLastUsedAt() ? self::anyConvDateToTimestamp($this->getLastUsedAt()) : '',
-            PersonalAccessTokenInterface::ATTRIBUTE_EXPIRESAT => $this->getExpiresAt() ? self::anyConvDateToTimestamp($this->getExpiresAt()) : 'Never',
-            'created_at' => self::anyConvDateToTimestamp($this->created_at)
+            PersonalAccessTokenInterface::ATTRIBUTE_LASTUSEDAT => $this->getLastUsedAt() ? CarbonHelper::anyConvDateToTimestamp($this->getLastUsedAt()) : '',
+            PersonalAccessTokenInterface::ATTRIBUTE_EXPIRESAT => $this->getExpiresAt() ? CarbonHelper::anyConvDateToTimestamp($this->getExpiresAt()) : 'Never',
+            'created_at' => CarbonHelper::anyConvDateToTimestamp($this->created_at)
         ];
 
         $_result = [];

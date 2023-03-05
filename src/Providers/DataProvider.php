@@ -2,6 +2,9 @@
 
 namespace TheBachtiarz\Auth\Providers;
 
+use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
+use TheBachtiarz\Base\BaseConfigInterface;
+
 class DataProvider
 {
     //
@@ -12,12 +15,20 @@ class DataProvider
      *
      * @return array
      */
-    public static function registerConfig(): array
+    public function registerConfig(): array
     {
         $registerConfig = [];
 
         // ! auth
-        $registerConfig[] = [];
+        $configRegistered = tbbaseconfig(BaseConfigInterface::CONFIG_REGISTERED);
+        $registerConfig[] = [
+            BaseConfigInterface::CONFIG_NAME . '.' . BaseConfigInterface::CONFIG_REGISTERED => array_merge(
+                $configRegistered,
+                [
+                    AuthConfigInterface::CONFIG_NAME
+                ]
+            )
+        ];
 
         return $registerConfig;
     }

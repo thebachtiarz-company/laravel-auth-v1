@@ -2,9 +2,11 @@
 
 namespace TheBachtiarz\Auth\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Models\User;
+use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 
 class UserRepository extends AbstractRepository
 {
@@ -34,9 +36,8 @@ class UserRepository extends AbstractRepository
      */
     public function create(UserInterface $userInterface): UserInterface
     {
-        /** @var User $userInterface */
-
-        /** @var User $_create */
+        /** @var Model $userInterface */
+        /** @var UserInterface $_create */
         $_create = $this->createFromModel($userInterface);
 
         if (!$_create) throw new ModelNotFoundException("Failed to create new user");
@@ -52,9 +53,7 @@ class UserRepository extends AbstractRepository
      */
     public function save(UserInterface $userInterface): UserInterface
     {
-        /** @var User $userInterface */
-
-        /** @var User $_user */
+        /** @var Model|UserInterface $userInterface */
         $_user = $userInterface->save();
 
         if (!$_user) throw new ModelNotFoundException("Failed to save current user");
@@ -70,7 +69,7 @@ class UserRepository extends AbstractRepository
      */
     public function deleteById(int $id): bool
     {
-        /** @var User $_user */
+        /** @var Model|UserInterface $_user */
         $_user = $this->getById($id);
 
         return $_user->delete();

@@ -19,11 +19,6 @@ class User extends Authenticatable implements UserInterface
     /**
      * {@inheritDoc}
      */
-    protected $fillable = [];
-
-    /**
-     * {@inheritDoc}
-     */
     protected $hidden = [
         'password'
     ];
