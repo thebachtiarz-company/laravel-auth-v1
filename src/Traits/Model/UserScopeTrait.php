@@ -23,7 +23,7 @@ trait UserScopeTrait
      */
     public function scopeGetByIdentifier(Builder $builder, string $identifier): Builder
     {
-        $_identifier = tbauthconfig(AuthConfigInterface::IDENTITY_METHOD);
+        $_identifier = tbconfigvalue(AuthConfigInterface::IDENTITY_METHOD);
 
         return $builder->where(DB::raw("BINARY `$_identifier`"), $identifier);
     }

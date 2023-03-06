@@ -28,7 +28,7 @@ if (!function_exists('tbauthmodeluserfillables')) {
      */
     function tbauthmodeluserfillables(): array
     {
-        return tbauthconfig('user_auth_identity_method') === 'email'
+        return tbconfigvalue('user_auth_identity_method') === 'email'
             ? UserInterface::ATTRIBUTES_EMAIL_IDENTITY_FILLABLE
             : UserInterface::ATTRIBUTES_USERNAME_IDENTITY_FILLABLE;
     }

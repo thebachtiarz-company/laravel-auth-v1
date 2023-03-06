@@ -3,7 +3,7 @@
 
 -------
 ## Requires
-- [laravel/framework](https://github.com/laravel/framework/) v^9.30 | v^10.0
+- [laravel/framework](https://github.com/laravel/framework/) v^9.40 | v^10.0
 - [laravel/sanctum](https://github.com/laravel/sanctum/) v^3.2
 - [thebachtiarz-company/laravel-base-v1](https://github.com/thebachtiarz/laravel-base-v1/) v^1.x
 
@@ -22,6 +22,8 @@ composer require thebachtiarz-company/laravel-auth-v1
 ```bash
 php artisan vendor:publish --provider="TheBachtiarz\Auth\ServiceProvider"
 ```
+
+- ###### Remove existing users migration in database/migrations directory
 
 - database migration
 ``` bash

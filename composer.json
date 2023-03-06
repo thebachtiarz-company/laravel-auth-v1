@@ -2,7 +2,7 @@
     "name": "thebachtiarz-company/laravel-auth-v1",
     "description": "An Authentication for Laravel Project v1",
     "type": "library",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "require": {
         "php": "^8.1",
         "laravel/framework": "^9.40|^10.0",
