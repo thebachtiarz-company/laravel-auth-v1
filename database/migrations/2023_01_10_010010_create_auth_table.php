@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
+use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 
 return new class extends Migration
@@ -29,6 +30,14 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('token_resets', function (Blueprint $table) {
+            $table->id();
+            $table->string(TokenResetInterface::ATTRIBUTE_TOKEN)->unique();
+            $table->string(TokenResetInterface::ATTRIBUTE_USERIDENTIFIER);
+            $table->timestamp(TokenResetInterface::ATTRIBUTE_EXPIRESAT)->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -39,5 +48,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('token_resets');
     }
 };

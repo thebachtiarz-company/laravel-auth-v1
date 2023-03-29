@@ -11,7 +11,7 @@ return [
     | example: email
     |
     */
-    'user_auth_identity_method' => "email",
+    'user_auth_identity_method' => 'email',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,4 +45,14 @@ return [
     |
     */
     'route_service' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default new user password
+    |--------------------------------------------------------------------------
+    |
+    | Define default user password.
+    |
+    */
+    'default_user_password' => '',
 ];

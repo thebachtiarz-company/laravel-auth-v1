@@ -4,7 +4,7 @@ namespace TheBachtiarz\Auth\Traits\Model;
 
 use Illuminate\Database\Eloquent\Builder;
 use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
-use TheBachtiarz\Auth\Models\User;
+use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 
 /**
  * Personal Access Token Map Trait
@@ -14,22 +14,22 @@ trait PersonalAccessTokenScopeTrait
     /**
      * Current Model User data
      *
-     * @var User
+     * @var UserInterface
      */
-    protected User $user;
+    protected UserInterface $userEntity;
 
     // ? Public Methods
     /**
      * Get own tokens
      *
      * @param Builder $builder
-     * @param User $user
+     * @param UserInterface $userInterface
      * @param array $whereCondition
      * @return Builder
      */
-    public function scopeGetOwnTokens(Builder $builder, User $user, array $whereCondition = []): Builder
+    public function scopeGetOwnTokens(Builder $builder, UserInterface $userInterface, array $whereCondition = []): Builder
     {
-        $this->user = $user;
+        $this->userEntity = $userInterface;
 
         return $builder->where($this->whereConditionResolver($whereCondition));
     }
@@ -38,14 +38,14 @@ trait PersonalAccessTokenScopeTrait
      * Get token by user model and token name
      *
      * @param Builder $builder
-     * @param User $user
+     * @param UserInterface $userInterface
      * @param string $tokenName
      * @return Builder
      */
-    public function scopeGetOwnTokenByName(Builder $builder, User $user, string $tokenName): Builder
+    public function scopeGetOwnTokenByName(Builder $builder, UserInterface $userInterface, string $tokenName): Builder
     {
         return $builder->getOwnTokens(
-            $user,
+            $userInterface,
             [PersonalAccessTokenInterface::ATTRIBUTE_NAME => $tokenName]
         );
     }
@@ -61,8 +61,8 @@ trait PersonalAccessTokenScopeTrait
     {
         return array_merge(
             [
-                'tokenable_type' => $this->user->getClassModel()::class,
-                'tokenable_id' => $this->user->id
+                'tokenable_type' => $this->userEntity->getClassModel()::class,
+                'tokenable_id' => $this->userEntity->getId()
             ],
             $whereConditionCustom
         );

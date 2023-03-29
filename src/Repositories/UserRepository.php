@@ -4,6 +4,7 @@ namespace TheBachtiarz\Auth\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Models\User;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository;
@@ -24,6 +25,21 @@ class UserRepository extends AbstractRepository
         $_user = User::find($id);
 
         if (!$_user) throw new ModelNotFoundException("User with id '$id' not found");
+
+        return $_user;
+    }
+
+    /**
+     * Get user by identifier
+     *
+     * @param string $identifier
+     * @return UserInterface
+     */
+    public function getByIdentifier(string $identifier): UserInterface
+    {
+        $_user = User::getByIdentifier($identifier)->first();
+
+        if (!$_user) throw new ModelNotFoundException(sprintf("User with %s '%s' not found", tbauthconfig(AuthConfigInterface::IDENTITY_METHOD), $identifier));
 
         return $_user;
     }
@@ -73,6 +89,20 @@ class UserRepository extends AbstractRepository
         $_user = $this->getById($id);
 
         return $_user->delete();
+    }
+
+    /**
+     * Delete user by identifier
+     *
+     * @param string $identifier
+     * @return boolean
+     */
+    public function deleteByIdentifier(string $identifier): bool
+    {
+        /** @var Model|UserInterface $_user */
+        $_user = $this->getByIdentifier($identifier);
+
+        return $this->deleteById($_user->getId());
     }
 
     // ? Private Methods

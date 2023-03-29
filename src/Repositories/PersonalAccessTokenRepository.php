@@ -18,6 +18,21 @@ class PersonalAccessTokenRepository extends AbstractRepository
 {
     //
 
+    /**
+     * Current auth user
+     *
+     * @var UserInterface|null
+     */
+    private ?UserInterface $currentUser = null;
+
+    /**
+     * Destructor
+     */
+    public function __destruct()
+    {
+        $this->currentUser = null;
+    }
+
     // ? Public Methods
     /**
      * Get current auth tokens
@@ -28,7 +43,7 @@ class PersonalAccessTokenRepository extends AbstractRepository
     {
         $this->authenticate();
 
-        $_collection = PersonalAccessToken::getOwnTokens(Auth::user());
+        $_collection = PersonalAccessToken::getOwnTokens($this->currentUser);
 
         if (!$_collection->count()) throw new ModelNotFoundException("There is no tokens for current auth");
 
@@ -45,7 +60,7 @@ class PersonalAccessTokenRepository extends AbstractRepository
     {
         $this->authenticate();
 
-        $_token = PersonalAccessToken::getOwnTokenByName(Auth::user(), $tokenName)->first();
+        $_token = PersonalAccessToken::getOwnTokenByName($this->currentUser, $tokenName)->first();
 
         if (!$_token) throw new ModelNotFoundException("Token with name '$tokenName' not found");
 
@@ -94,8 +109,24 @@ class PersonalAccessTokenRepository extends AbstractRepository
      */
     protected function authenticate(): void
     {
-        if (!Auth::hasUser()) throw new AuthenticationException();
+        if (!$this->currentUser) {
+            if (!Auth::hasUser()) throw new AuthenticationException();
+
+            $this->currentUser = Auth::user();
+        }
     }
 
     // ? Setter Modules
+    /**
+     * Set current user
+     *
+     * @param UserInterface $userInterface
+     * @return self
+     */
+    public function setCurrentUser(UserInterface $userInterface): self
+    {
+        $this->currentUser = $userInterface;
+
+        return $this;
+    }
 }

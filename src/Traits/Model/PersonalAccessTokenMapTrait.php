@@ -3,7 +3,6 @@
 namespace TheBachtiarz\Auth\Traits\Model;
 
 use TheBachtiarz\Auth\Interfaces\Model\PersonalAccessTokenInterface;
-use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 
 /**
@@ -21,7 +20,7 @@ trait PersonalAccessTokenMapTrait
     public function simpleListMap(array $return = ['name', 'last_used_at', 'expires_at', 'created_at']): array
     {
         /**
-         * @var PersonalAccessToken $this
+         * @var PersonalAccessTokenInterface $this
          */
 
         $_data = [
@@ -39,10 +38,7 @@ trait PersonalAccessTokenMapTrait
         $_result = [];
 
         foreach ($return as $key => $attribute) {
-            try {
-                $_result[$attribute] = $_data[$attribute];
-            } catch (\Throwable $th) {
-            }
+            if (@$_data[$attribute]) $_result[$attribute] = $_data[$attribute];
         }
 
         return $_result;
