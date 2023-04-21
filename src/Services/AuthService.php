@@ -26,6 +26,7 @@ class AuthService extends AbstractService
     /**
      * Constructor
      *
+     * @param UserRepository $userRepository
      * @param PersonalAccessTokenRepository $personalAccessTokenRepository
      */
     public function __construct(

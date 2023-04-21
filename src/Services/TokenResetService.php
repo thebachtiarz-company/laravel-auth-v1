@@ -67,7 +67,7 @@ class TokenResetService extends AbstractService
             );
         } catch (\Throwable $th) {
             $this->log($th);
-            static::$responseHelper::setResponseData($th->getMessage())->setStatus('error')->setHttpCode(202);
+            $this->setResponseData(message: $th->getMessage(), status: 'error', httpCode: 202);
         }
 
         return $result;

@@ -4,7 +4,6 @@ namespace TheBachtiarz\Auth\Repositories;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
@@ -45,8 +44,6 @@ class PersonalAccessTokenRepository extends AbstractRepository
 
         $_collection = PersonalAccessToken::getOwnTokens($this->currentUser);
 
-        if (!$_collection->count()) throw new ModelNotFoundException("There is no tokens for current auth");
-
         return $_collection->get();
     }
 
@@ -54,15 +51,13 @@ class PersonalAccessTokenRepository extends AbstractRepository
      * Get token by name
      *
      * @param string $tokenName
-     * @return PersonalAccessTokenInterface
+     * @return PersonalAccessTokenInterface|null
      */
-    public function getByName(string $tokenName): PersonalAccessTokenInterface
+    public function getByName(string $tokenName): ?PersonalAccessTokenInterface
     {
         $this->authenticate();
 
         $_token = PersonalAccessToken::getOwnTokenByName($this->currentUser, $tokenName)->first();
-
-        if (!$_token) throw new ModelNotFoundException("Token with name '$tokenName' not found");
 
         return $_token;
     }
@@ -94,10 +89,10 @@ class PersonalAccessTokenRepository extends AbstractRepository
      */
     public function deleteByName(string $tokenName): bool
     {
-        /** @var PersonalAccessToken $_token */
+        /** @var PersonalAccessToken|null $_token */
         $_token = $this->getByName($tokenName);
 
-        return $_token->delete();
+        return $_token?->delete() ?? false;
     }
 
     // ? Protected Methods
@@ -112,8 +107,21 @@ class PersonalAccessTokenRepository extends AbstractRepository
         if (!$this->currentUser) {
             if (!Auth::hasUser()) throw new AuthenticationException();
 
-            $this->currentUser = Auth::user();
+            $this->currentUser = $this->getCurrentUserSession();
         }
+    }
+
+    /**
+     * Get current user session
+     *
+     * @return UserInterface
+     */
+    protected function getCurrentUserSession(): UserInterface
+    {
+        /** @var \TheBachtiarz\Auth\Repositories\UserRepository $userRepository */
+        $userRepository = \Illuminate\Container\Container::getInstance()->make(\TheBachtiarz\Auth\Repositories\UserRepository::class);
+
+        return $userRepository->getById(Auth::user()->id);
     }
 
     // ? Setter Modules

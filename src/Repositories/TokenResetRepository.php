@@ -37,11 +37,11 @@ class TokenResetRepository extends AbstractRepository
      */
     public function getByToken(string $token): TokenResetInterface
     {
-        $token = TokenReset::getByToken($token)->first();
+        $tokenReset = TokenReset::getByToken($token)->first();
 
-        if (!$token) throw new ModelNotFoundException("Token reset with token '$token' not found");
+        if (!$tokenReset) throw new ModelNotFoundException("Token reset with token '$token' not found");
 
-        return $token;
+        return $tokenReset;
     }
 
     /**

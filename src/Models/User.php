@@ -32,7 +32,9 @@ class User extends Authenticatable implements UserInterface
     protected self $classModel;
 
     /**
-     * Define token expires at
+     * Define token expires at.
+     *
+     * example: \TheBachtiarz\Base\App\Helpers\CarbonHelper::dbGetFullDateAddHours(1) -> to add 1 hour after token created.
      *
      * @var Carbon|null
      */

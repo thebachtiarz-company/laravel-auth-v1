@@ -16,6 +16,15 @@ abstract class AbstractUserData implements AbstractUserDataInterface
      */
     protected array $data = [];
 
+    // ? Public Methods
+    /**
+     * {@inheritDoc}
+     */
+    public function getData(?string $attribute = null): mixed
+    {
+        return @$this->data[$attribute] ?? $this->data;
+    }
+
     // ? Getter Modules
     /**
      * {@inheritDoc}
@@ -41,7 +50,7 @@ abstract class AbstractUserData implements AbstractUserDataInterface
     /**
      * {@inheritDoc}
      */
-    public function setIdentifier(string $identifier): self
+    public function setIdentifier(string $identifier): static
     {
         $this->data[self::ATTRIBUTE_IDENTIFIER] = $identifier;
 
@@ -51,7 +60,7 @@ abstract class AbstractUserData implements AbstractUserDataInterface
     /**
      * {@inheritDoc}
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
         $this->data[self::ATTRIBUTE_PASSWORD] = $password;
 

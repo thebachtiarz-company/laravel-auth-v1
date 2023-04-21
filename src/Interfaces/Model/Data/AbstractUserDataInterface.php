@@ -7,6 +7,15 @@ interface AbstractUserDataInterface
     public const ATTRIBUTE_IDENTIFIER = 'identifier';
     public const ATTRIBUTE_PASSWORD = 'password';
 
+    // ? Public Methods
+    /**
+     * Get data
+     *
+     * @param string|null $attribute
+     * @return mixed
+     */
+    public function getData(?string $attribute = null): mixed;
+
     // ? Getter Modules
     /**
      * Get identifier
@@ -28,15 +37,15 @@ interface AbstractUserDataInterface
      * Set identifier
      *
      * @param string $identifier
-     * @return self
+     * @return static
      */
-    public function setIdentifier(string $identifier): self;
+    public function setIdentifier(string $identifier): static;
 
     /**
      * Set password
      *
      * @param string $password
-     * @return self
+     * @return static
      */
-    public function setPassword(string $password): self;
+    public function setPassword(string $password): static;
 }
