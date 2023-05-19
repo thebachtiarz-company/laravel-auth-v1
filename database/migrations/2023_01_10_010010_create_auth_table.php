@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create(UserInterface::TABLE_NAME, function (Blueprint $table) {
             $table->id();
             if (tbauthconfig(AuthConfigInterface::IDENTITY_METHOD) === UserInterface::ATTRIBUTE_EMAIL) {
                 $table->string(UserInterface::ATTRIBUTE_EMAIL)->unique();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('token_resets', function (Blueprint $table) {
+        Schema::create(TokenResetInterface::TABLE_NAME, function (Blueprint $table) {
             $table->id();
             $table->string(TokenResetInterface::ATTRIBUTE_TOKEN)->unique();
             $table->string(TokenResetInterface::ATTRIBUTE_USERIDENTIFIER);
@@ -47,7 +47,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('token_resets');
+        Schema::dropIfExists(UserInterface::TABLE_NAME);
+        Schema::dropIfExists(TokenResetInterface::TABLE_NAME);
     }
 };

@@ -2,8 +2,17 @@
 
 namespace TheBachtiarz\Auth\Interfaces\Model;
 
-interface TokenResetInterface
+use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+
+interface TokenResetInterface extends AbstractModelInterface
 {
+    /**
+     * Table name
+     *
+     * @var string
+     */
+    public const TABLE_NAME = 'token_resets';
+
     /**
      * Model attributes
      *
@@ -21,13 +30,6 @@ interface TokenResetInterface
     public const ATTRIBUTE_EXPIRESAT = 'expires_at';
 
     // ? Getter Modules
-    /**
-     * Getid
-     *
-     * @return integer|null
-     */
-    public function getId(): ?int;
-
     /**
      * Get token reset
      *
@@ -50,14 +52,6 @@ interface TokenResetInterface
     public function getExpiresAt(): ?string;
 
     // ? Setter Modules
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId(int $id): self;
-
     /**
      * Set token reset
      *

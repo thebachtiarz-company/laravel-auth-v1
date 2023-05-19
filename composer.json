@@ -2,12 +2,12 @@
     "name": "thebachtiarz-company/laravel-auth-v1",
     "description": "An Authentication for Laravel Project v1",
     "type": "library",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "require": {
         "php": "^8.1",
-        "laravel/framework": "^9.40|^10.0",
+        "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "thebachtiarz-company/laravel-base-v1": "^1.0"
+        "thebachtiarz-company/laravel-base-v1": "^1.0.11"
     },
     "license": "MIT",
     "autoload": {

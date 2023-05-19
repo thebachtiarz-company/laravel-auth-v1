@@ -3,7 +3,7 @@
 
 -------
 ## Requires
-- [laravel/framework](https://github.com/laravel/framework/) v^9.40 | v^10.0
+- [laravel/framework](https://github.com/laravel/framework/) v^10.0
 - [laravel/sanctum](https://github.com/laravel/sanctum/) v^3.2
 - [thebachtiarz-company/laravel-base-v1](https://github.com/thebachtiarz/laravel-base-v1/) v^1.x
 

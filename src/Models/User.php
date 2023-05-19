@@ -19,6 +19,11 @@ class User extends Authenticatable implements UserInterface
     /**
      * {@inheritDoc}
      */
+    protected $table = self::TABLE_NAME;
+
+    /**
+     * {@inheritDoc}
+     */
     protected $hidden = [
         'password'
     ];
@@ -48,6 +53,25 @@ class User extends Authenticatable implements UserInterface
         parent::__construct($attributes);
         $this->classModel = $this;
         $this->fillable($this->mutateFillable());
+    }
+
+    // ? Public Methods
+    /**
+     * {@inheritDoc}
+     */
+    public function getData(string $attribute): mixed
+    {
+        return $this->__get($attribute);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setData(string $attribute, mixed $value): static
+    {
+        $this->__set($attribute, $value);
+
+        return $this;
     }
 
     // ? Protected Methods
@@ -116,6 +140,22 @@ class User extends Authenticatable implements UserInterface
     public function getTokenExpiresAt(): ?Carbon
     {
         return $this->tokenExpiresAt;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCreatedAt(): ?string
+    {
+        return $this->__get(self::ATTRIBUTE_CREATEDAT);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUpdatedAt(): ?string
+    {
+        return $this->__get(self::ATTRIBUTE_UPDATEDAT);
     }
 
     // ? Setter Modules

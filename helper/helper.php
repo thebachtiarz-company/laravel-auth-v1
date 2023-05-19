@@ -7,16 +7,15 @@ if (!function_exists('tbauthconfig')) {
     /**
      * TheBachtiarz auth config
      *
-     * @param string|null $keyName config key name | null will return all
+     * @param string|null $keyName Config key name | null will return all
+     * @param boolean|null $useOrigin Use original value from config
      * @return mixed
      */
-    function tbauthconfig(?string $keyName = null): mixed
+    function tbauthconfig(?string $keyName = null, ?bool $useOrigin = true): mixed
     {
         $configName = AuthConfigInterface::CONFIG_NAME;
 
-        return iconv_strlen($keyName)
-            ? config("{$configName}.{$keyName}")
-            : config("{$configName}");
+        return tbconfig($configName, $keyName, $useOrigin);
     }
 }
 

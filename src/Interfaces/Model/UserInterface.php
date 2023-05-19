@@ -4,9 +4,17 @@ namespace TheBachtiarz\Auth\Interfaces\Model;
 
 use Illuminate\Support\Carbon;
 use TheBachtiarz\Auth\Models\User;
+use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
 
-interface UserInterface
+interface UserInterface extends AbstractModelInterface
 {
+    /**
+     * Table name
+     *
+     * @var string
+     */
+    public const TABLE_NAME = 'users';
+
     /**
      * Model attributes for email identity fillable
      *
@@ -35,13 +43,6 @@ interface UserInterface
     public const ATTRIBUTE_PASSWORD = 'password';
 
     // ? Getter Modules
-    /**
-     * Get id
-     *
-     * @return integer|null
-     */
-    public function getId(): ?int;
-
     /**
      * Get email
      *
@@ -86,13 +87,6 @@ interface UserInterface
     public function getTokenExpiresAt(): ?Carbon;
 
     // ? Setter Modules
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId(int $id): self;
 
     /**
      * Set email

@@ -2,13 +2,18 @@
 
 namespace TheBachtiarz\Auth\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
 use TheBachtiarz\Auth\Traits\Model\TokenResetScopeTrait;
+use TheBachtiarz\Base\App\Models\AbstractModel;
 
-class TokenReset extends Model implements TokenResetInterface
+class TokenReset extends AbstractModel implements TokenResetInterface
 {
     use TokenResetScopeTrait;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected $table = self::TABLE_NAME;
 
     /**
      * {@inheritDoc}
@@ -16,14 +21,6 @@ class TokenReset extends Model implements TokenResetInterface
     protected $fillable = self::ATTRIBUTES_FILLABLE;
 
     // ? Getter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function getId(): ?int
-    {
-        return $this->__get(self::ATTRIBUTE_ID);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -49,16 +46,6 @@ class TokenReset extends Model implements TokenResetInterface
     }
 
     // ? Setter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function setId(int $id): self
-    {
-        $this->__set(self::ATTRIBUTE_ID, $id);
-
-        return $this;
-    }
-
     /**
      * {@inheritDoc}
      */
