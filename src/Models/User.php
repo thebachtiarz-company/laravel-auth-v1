@@ -3,14 +3,13 @@
 namespace TheBachtiarz\Auth\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Traits\Model\UserScopeTrait;
 
-class User extends Authenticatable implements UserInterface
+class User extends AbstractUserModel implements UserInterface
 {
     use HasApiTokens, Notifiable, SoftDeletes;
 
@@ -55,25 +54,6 @@ class User extends Authenticatable implements UserInterface
         $this->fillable($this->mutateFillable());
     }
 
-    // ? Public Methods
-    /**
-     * {@inheritDoc}
-     */
-    public function getData(string $attribute): mixed
-    {
-        return $this->__get($attribute);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setData(string $attribute, mixed $value): static
-    {
-        $this->__set($attribute, $value);
-
-        return $this;
-    }
-
     // ? Protected Methods
     /**
      * Model fillable mutator
@@ -86,14 +66,6 @@ class User extends Authenticatable implements UserInterface
     }
 
     // ? Getter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function getId(): ?int
-    {
-        return $this->__get(self::ATTRIBUTE_ID);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -142,33 +114,7 @@ class User extends Authenticatable implements UserInterface
         return $this->tokenExpiresAt;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCreatedAt(): ?string
-    {
-        return $this->__get(self::ATTRIBUTE_CREATEDAT);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getUpdatedAt(): ?string
-    {
-        return $this->__get(self::ATTRIBUTE_UPDATEDAT);
-    }
-
     // ? Setter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function setId(int $id): self
-    {
-        $this->__set(self::ATTRIBUTE_ID, $id);
-
-        return $this;
-    }
-
     /**
      * {@inheritDoc}
      */

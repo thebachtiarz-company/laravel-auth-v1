@@ -36,7 +36,6 @@ interface UserInterface extends AbstractModelInterface
         self::ATTRIBUTE_PASSWORD
     ];
 
-    public const ATTRIBUTE_ID = 'id';
     public const ATTRIBUTE_EMAIL = 'email';
     public const ATTRIBUTE_EMAIL_VERIFIED_AT = 'email_verified_at';
     public const ATTRIBUTE_USERNAME = 'username';
