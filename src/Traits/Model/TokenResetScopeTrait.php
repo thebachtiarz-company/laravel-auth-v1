@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Traits\Model;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -11,15 +13,10 @@ use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
  */
 trait TokenResetScopeTrait
 {
-    //
-
     // ? Public Methods
+
     /**
      * Get by token
-     *
-     * @param Builder $builder
-     * @param string $token
-     * @return Builder
      */
     public function scopeGetByToken(Builder $builder, string $token): Builder
     {
@@ -30,10 +27,6 @@ trait TokenResetScopeTrait
 
     /**
      * Get by user identifier
-     *
-     * @param Builder $builder
-     * @param string $userIdentifier
-     * @return Builder
      */
     public function scopeGetByUserIdentifier(Builder $builder, string $userIdentifier): Builder
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Models;
 
 use Illuminate\Support\Carbon;
@@ -10,11 +12,9 @@ use TheBachtiarz\Auth\Traits\Model\PersonalAccessTokenScopeTrait;
 
 class PersonalAccessToken extends SanctumPersonalAccessToken implements PersonalAccessTokenInterface
 {
-    use PersonalAccessTokenMapTrait, PersonalAccessTokenScopeTrait;
+    use PersonalAccessTokenMapTrait;
+    use PersonalAccessTokenScopeTrait;
 
-    /**
-     * {@inheritDoc}
-     */
     protected $fillable = self::ATTRIBUTES_FILLABLE;
 
     /**
@@ -25,75 +25,46 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         parent::__construct($attributes);
     }
 
-    // ? Getter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->__get(self::ATTRIBUTE_ID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTokenableType(): ?string
+    public function getTokenableType(): string|null
     {
         return $this->__get(self::ATTRIBUTE_TOKENABLETYPE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTokenableId(): ?int
+    public function getTokenableId(): int|null
     {
         return $this->__get(self::ATTRIBUTE_TOKENABLEID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getName(): ?string
+    public function getName(): string|null
     {
         return $this->__get(self::ATTRIBUTE_NAME);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getToken(): ?string
+    public function getToken(): string|null
     {
         return $this->__get(self::ATTRIBUTE_TOKEN);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getAbilities(): ?array
+    public function getAbilities(): array|null
     {
         return $this->__get(self::ATTRIBUTE_ABILITIES);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getLastUsedAt(): ?Carbon
+    public function getLastUsedAt(): Carbon|null
     {
         return $this->__get(self::ATTRIBUTE_LASTUSEDAT);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getExpiresAt(): ?Carbon
+    public function getExpiresAt(): Carbon|null
     {
         return $this->__get(self::ATTRIBUTE_EXPIRESAT);
     }
 
-    // ? Setter Modules
-    /**
-     * {@inheritDoc}
-     */
     public function setId(int $id): self
     {
         $this->__set(self::ATTRIBUTE_ID, $id);
@@ -101,9 +72,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setTokenableType(string $tokenableType): self
     {
         $this->__set(self::ATTRIBUTE_TOKENABLETYPE, $tokenableType);
@@ -111,9 +79,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setTokenableId(int $tokenableId): self
     {
         $this->__set(self::ATTRIBUTE_TOKENABLEID, $tokenableId);
@@ -121,9 +86,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setName(string $name): self
     {
         $this->__set(self::ATTRIBUTE_NAME, $name);
@@ -131,9 +93,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setToken(string $token): self
     {
         $this->__set(self::ATTRIBUTE_TOKEN, $token);
@@ -151,9 +110,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setLastUsedAt(Carbon $lastUsedAt): self
     {
         $this->__set(self::ATTRIBUTE_LASTUSEDAT, $lastUsedAt);
@@ -161,9 +117,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken implements Personal
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setExpiresAt(Carbon $expiresAt): self
     {
         $this->__set(self::ATTRIBUTE_EXPIRESAT, $expiresAt);

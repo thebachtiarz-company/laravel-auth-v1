@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Interfaces\Model\Data;
 
 interface UserPasswordUpdateDataInterface extends AbstractUserDataInterface
@@ -7,20 +9,16 @@ interface UserPasswordUpdateDataInterface extends AbstractUserDataInterface
     public const ATTRIBUTE_PASSWORD_OLD = 'password_old';
 
     // ? Getter Modules
+
     /**
      * Get password old
-     *
-     * @param boolean $hashed
-     * @return string|null
      */
-    public function getPasswordOld(bool $hashed = false): ?string;
+    public function getPasswordOld(bool $hashed = false): string|null;
 
     // ? Setter Modules
+
     /**
      * Set password old
-     *
-     * @param string $passwordOld
-     * @return self
      */
     public function setPasswordOld(string $passwordOld): self;
 }

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Services;
 
+use Exception;
 use Illuminate\Support\Str;
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
 use TheBachtiarz\Auth\Interfaces\Model\TokenResetInterface;
@@ -11,48 +14,47 @@ use TheBachtiarz\Auth\Repositories\TokenResetRepository;
 use TheBachtiarz\Auth\Repositories\UserRepository;
 use TheBachtiarz\Base\App\Helpers\CarbonHelper;
 use TheBachtiarz\Base\App\Services\AbstractService;
+use Throwable;
+
+use function assert;
+use function in_array;
+use function tbauthconfig;
 
 class TokenResetService extends AbstractService
 {
-    //
-
     /**
      * Constructor
-     *
-     * @param TokenResetRepository $tokenResetRepository
-     * @param UserRepository $userRepository
      */
     public function __construct(
         protected TokenResetRepository $tokenResetRepository,
-        protected UserRepository $userRepository
+        protected UserRepository $userRepository,
     ) {
         $this->tokenResetRepository = $tokenResetRepository;
-        $this->userRepository = $userRepository;
+        $this->userRepository       = $userRepository;
     }
 
     // ? Public Methods
+
     /**
      * Create token reset
-     *
-     * @param string $userIdentifier
-     * @return TokenReset|null
      */
-    public function createTokenReset(string $userIdentifier): ?TokenReset
+    public function createTokenReset(string $userIdentifier): TokenReset|null
     {
         $result = null;
 
         try {
-            if (!in_array(tbauthconfig(AuthConfigInterface::IDENTITY_METHOD), [UserInterface::ATTRIBUTE_EMAIL]))
-                throw new \Exception("Only for email identifier");
+            if (! in_array(tbauthconfig(AuthConfigInterface::IDENTITY_METHOD), [UserInterface::ATTRIBUTE_EMAIL])) {
+                throw new Exception('Only for email identifier');
+            }
 
-            /** @var UserInterface $user */
             $user = $this->userRepository->getByIdentifier($userIdentifier);
+            assert($user instanceof UserInterface);
 
-            /** @var TokenResetInterface $tokenResetPrepare */
-            $tokenResetPrepare = (new TokenReset)
+            $tokenResetPrepare = (new TokenReset())
                 ->setToken(Str::uuid()->toString())
                 ->setUserIdentifier($user->getEmail())
                 ->setExpiresAt(CarbonHelper::dbGetFullDateAddHours());
+            assert($tokenResetPrepare instanceof TokenResetInterface);
 
             $result = $this->tokenResetRepository->create($tokenResetPrepare);
 
@@ -62,10 +64,10 @@ class TokenResetService extends AbstractService
                 message: 'Successfully create token reset',
                 data: [
                     'email' => $result->getUserIdentifier(),
-                    'expires' => CarbonHelper::anyConvDateToTimestamp($result->getExpiresAt())
-                ]
+                    'expires' => CarbonHelper::anyConvDateToTimestamp($result->getExpiresAt()),
+                ],
             );
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             $this->log($th);
             $this->setResponseData(message: $th->getMessage(), status: 'error', httpCode: 202);
         }

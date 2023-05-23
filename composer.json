@@ -2,7 +2,7 @@
     "name": "thebachtiarz-company/laravel-auth-v1",
     "description": "An Authentication for Laravel Project v1",
     "type": "library",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "require": {
         "php": "^8.1",
         "laravel/framework": "^10.0",
@@ -43,8 +43,14 @@
         "source": "https://github.com/thebachtiarz-company/laravel-auth-v1"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "doctrine/coding-standard": "^12.0"
+    }
 }

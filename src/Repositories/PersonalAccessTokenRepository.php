@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Repositories;
 
 use Illuminate\Auth\AuthenticationException;
@@ -13,16 +15,15 @@ use TheBachtiarz\Auth\Models\PersonalAccessToken;
 use TheBachtiarz\Auth\Models\User;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 
+use function app;
+use function assert;
+
 class PersonalAccessTokenRepository extends AbstractRepository
 {
-    //
-
     /**
      * Current auth user
-     *
-     * @var UserInterface|null
      */
-    private ?UserInterface $currentUser = null;
+    private UserInterface|null $currentUser = null;
 
     /**
      * Destructor
@@ -33,6 +34,7 @@ class PersonalAccessTokenRepository extends AbstractRepository
     }
 
     // ? Public Methods
+
     /**
      * Get current auth tokens
      *
@@ -49,89 +51,74 @@ class PersonalAccessTokenRepository extends AbstractRepository
 
     /**
      * Get token by name
-     *
-     * @param string $tokenName
-     * @return PersonalAccessTokenInterface|null
      */
-    public function getByName(string $tokenName): ?PersonalAccessTokenInterface
+    public function getByName(string $tokenName): PersonalAccessTokenInterface|null
     {
         $this->authenticate();
 
-        $token = PersonalAccessToken::getOwnTokenByName($this->currentUser, $tokenName)->first();
-
-        return $token;
+        return PersonalAccessToken::getOwnTokenByName($this->currentUser, $tokenName)->first();
     }
 
     /**
      * Create a new token
-     *
-     * @param UserInterface $userInterface
-     * @return NewAccessToken
      */
     public function create(UserInterface $userInterface): NewAccessToken
     {
         $this->authenticate();
 
         /** @var User $userInterface */
-        $create = $userInterface->createToken(
+        return $userInterface->createToken(
             name: Str::uuid()->toString(),
-            expiresAt: $userInterface->getTokenExpiresAt()
+            expiresAt: $userInterface->getTokenExpiresAt(),
         );
-
-        return $create;
     }
 
     /**
      * Delete token by name
-     *
-     * @param string $tokenName
-     * @return boolean
      */
     public function deleteByName(string $tokenName): bool
     {
-        /** @var PersonalAccessToken|null $token */
         $token = $this->getByName($tokenName);
+        assert($token instanceof PersonalAccessToken || $token === null);
 
         return $token?->delete() ?? false;
     }
 
     // ? Protected Methods
+
     /**
      * Check is authenticated
      *
-     * @return void
      * @throws AuthenticationException
      */
     protected function authenticate(): void
     {
-        if (!$this->currentUser) {
-            if (!Auth::hasUser()) {
-                throw new AuthenticationException();
-            }
-
-            $this->currentUser = $this->getCurrentUserSession();
+        if ($this->currentUser) {
+            return;
         }
+
+        if (! Auth::hasUser()) {
+            throw new AuthenticationException();
+        }
+
+        $this->currentUser = $this->getCurrentUserSession();
     }
 
     /**
      * Get current user session
-     *
-     * @return UserInterface
      */
     protected function getCurrentUserSession(): UserInterface
     {
-        /** @var \TheBachtiarz\Auth\Repositories\UserRepository $userRepository */
-        $userRepository = app(\TheBachtiarz\Auth\Repositories\UserRepository::class);
+        $userRepository = app(UserRepository::class);
+        assert($userRepository instanceof UserRepository);
 
         return $userRepository->getById(Auth::user()->id);
     }
 
     // ? Setter Modules
+
     /**
      * Set current user
-     *
-     * @param UserInterface $userInterface
-     * @return self
      */
     public function setCurrentUser(UserInterface $userInterface): self
     {

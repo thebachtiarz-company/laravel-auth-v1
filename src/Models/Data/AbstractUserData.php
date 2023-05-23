@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Models\Data;
 
 use Illuminate\Support\Facades\Hash;
@@ -7,8 +9,6 @@ use TheBachtiarz\Auth\Interfaces\Model\Data\AbstractUserDataInterface;
 
 abstract class AbstractUserData implements AbstractUserDataInterface
 {
-    //
-
     /**
      * Data
      *
@@ -16,28 +16,17 @@ abstract class AbstractUserData implements AbstractUserDataInterface
      */
     protected array $data = [];
 
-    // ? Public Methods
-    /**
-     * {@inheritDoc}
-     */
-    public function getData(?string $attribute = null): mixed
+    public function getData(string|null $attribute = null): mixed
     {
         return @$this->data[$attribute] ?? $this->data;
     }
 
-    // ? Getter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function getIdentifier(): ?string
+    public function getIdentifier(): string|null
     {
         return @$this->data[self::ATTRIBUTE_IDENTIFIER];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getPassword(bool $hashed = true): ?string
+    public function getPassword(bool $hashed = true): string|null
     {
         if (@$this->data[self::ATTRIBUTE_PASSWORD]) {
             return $hashed ? Hash::make($this->data[self::ATTRIBUTE_PASSWORD]) : $this->data[self::ATTRIBUTE_PASSWORD];
@@ -46,10 +35,6 @@ abstract class AbstractUserData implements AbstractUserDataInterface
         return null;
     }
 
-    // ? Setter Modules
-    /**
-     * {@inheritDoc}
-     */
     public function setIdentifier(string $identifier): static
     {
         $this->data[self::ATTRIBUTE_IDENTIFIER] = $identifier;
@@ -57,9 +42,6 @@ abstract class AbstractUserData implements AbstractUserDataInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setPassword(string $password): static
     {
         $this->data[self::ATTRIBUTE_PASSWORD] = $password;

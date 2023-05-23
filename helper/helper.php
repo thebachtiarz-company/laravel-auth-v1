@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 
-if (!function_exists('tbauthconfig')) {
+if (! function_exists('tbauthconfig')) {
     /**
      * TheBachtiarz auth config
      *
-     * @param string|null $keyName Config key name | null will return all
-     * @param boolean|null $useOrigin Use original value from config
-     * @return mixed
+     * @param string|null $keyName   Config key name | null will return all
+     * @param bool|null   $useOrigin Use original value from config
      */
-    function tbauthconfig(?string $keyName = null, ?bool $useOrigin = true): mixed
+    function tbauthconfig(string|null $keyName = null, bool|null $useOrigin = true): mixed
     {
         $configName = AuthConfigInterface::CONFIG_NAME;
 
@@ -19,7 +20,7 @@ if (!function_exists('tbauthconfig')) {
     }
 }
 
-if (!function_exists('tbauthmodeluserfillables')) {
+if (! function_exists('tbauthmodeluserfillables')) {
     /**
      * Get User model fillable
      *

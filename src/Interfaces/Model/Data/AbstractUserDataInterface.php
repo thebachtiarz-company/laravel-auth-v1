@@ -1,42 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Interfaces\Model\Data;
 
 interface AbstractUserDataInterface
 {
     public const ATTRIBUTE_IDENTIFIER = 'identifier';
-    public const ATTRIBUTE_PASSWORD = 'password';
+    public const ATTRIBUTE_PASSWORD   = 'password';
 
     // ? Public Methods
+
     /**
      * Get data
-     *
-     * @param string|null $attribute
-     * @return mixed
      */
-    public function getData(?string $attribute = null): mixed;
+    public function getData(string|null $attribute = null): mixed;
 
     // ? Getter Modules
+
     /**
      * Get identifier
-     *
-     * @return string|null
      */
-    public function getIdentifier(): ?string;
+    public function getIdentifier(): string|null;
 
     /**
      * Get password
-     *
-     * @param boolean $hashed
-     * @return string|null
      */
-    public function getPassword(bool $hashed = true): ?string;
+    public function getPassword(bool $hashed = true): string|null;
 
     // ? Setter Modules
+
     /**
      * Set identifier
      *
-     * @param string $identifier
      * @return static
      */
     public function setIdentifier(string $identifier): static;
@@ -44,7 +40,6 @@ interface AbstractUserDataInterface
     /**
      * Set password
      *
-     * @param string $password
      * @return static
      */
     public function setPassword(string $password): static;

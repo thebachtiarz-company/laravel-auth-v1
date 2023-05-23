@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,29 +11,22 @@ use Laravel\Sanctum\HasApiTokens;
 use TheBachtiarz\Auth\Interfaces\Model\UserInterface;
 use TheBachtiarz\Auth\Traits\Model\UserScopeTrait;
 
+use function tbauthmodeluserfillables;
+
 class User extends AbstractUserModel implements UserInterface
 {
-    use HasApiTokens, Notifiable, SoftDeletes;
-
+    use HasApiTokens;
+    use Notifiable;
+    use SoftDeletes;
     use UserScopeTrait;
 
-    /**
-     * {@inheritDoc}
-     */
     protected $table = self::TABLE_NAME;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected $hidden = [
-        'password'
-    ];
+    protected $hidden = ['password'];
 
     /**
      * Define class model.
      * Override purposes.
-     *
-     * @var self
      */
     protected self $classModel;
 
@@ -39,10 +34,8 @@ class User extends AbstractUserModel implements UserInterface
      * Define token expires at.
      *
      * example: \TheBachtiarz\Base\App\Helpers\CarbonHelper::dbGetFullDateAddHours(1) -> to add 1 hour after token created.
-     *
-     * @var Carbon|null
      */
-    protected ?Carbon $tokenExpiresAt = null;
+    protected Carbon|null $tokenExpiresAt = null;
 
     /**
      * {@inheritDoc}
@@ -50,11 +43,13 @@ class User extends AbstractUserModel implements UserInterface
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
+
         $this->classModel = $this;
         $this->fillable($this->mutateFillable());
     }
 
     // ? Protected Methods
+
     /**
      * Model fillable mutator
      *
@@ -65,59 +60,36 @@ class User extends AbstractUserModel implements UserInterface
         return tbauthmodeluserfillables();
     }
 
-    // ? Getter Modules
-    /**
-     * {@inheritDoc}
-     */
-    public function getEmail(): ?string
+    public function getEmail(): string|null
     {
         return $this->__get(self::ATTRIBUTE_EMAIL);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getEmailVerifiedAt(): ?string
+    public function getEmailVerifiedAt(): string|null
     {
         return $this->__get(self::ATTRIBUTE_EMAIL_VERIFIED_AT);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getUsername(): ?string
+    public function getUsername(): string|null
     {
         return $this->__get(self::ATTRIBUTE_USERNAME);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getPassword(): ?string
+    public function getPassword(): string|null
     {
         return $this->__get(self::ATTRIBUTE_PASSWORD);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getClassModel(): User
     {
         return $this->classModel;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTokenExpiresAt(): ?Carbon
+    public function getTokenExpiresAt(): Carbon|null
     {
         return $this->tokenExpiresAt;
     }
 
-    // ? Setter Modules
-    /**
-     * {@inheritDoc}
-     */
     public function setEmail(string $email): self
     {
         $this->__set(self::ATTRIBUTE_EMAIL, $email);
@@ -125,9 +97,6 @@ class User extends AbstractUserModel implements UserInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setEmailVerifiedAt(string $emailVerifiedAt): self
     {
         $this->__set(self::ATTRIBUTE_EMAIL_VERIFIED_AT, $emailVerifiedAt);
@@ -135,9 +104,6 @@ class User extends AbstractUserModel implements UserInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setUsername(string $username): self
     {
         $this->__set(self::ATTRIBUTE_USERNAME, $username);
@@ -145,9 +111,6 @@ class User extends AbstractUserModel implements UserInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setPassword(string $password): self
     {
         $this->__set(self::ATTRIBUTE_PASSWORD, $password);
@@ -155,9 +118,6 @@ class User extends AbstractUserModel implements UserInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setClassModel(User $user): self
     {
         $this->classModel = $user;
@@ -165,9 +125,6 @@ class User extends AbstractUserModel implements UserInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setTokenExpiresAt(Carbon $tokenExpiresAt): self
     {
         $this->tokenExpiresAt = $tokenExpiresAt;

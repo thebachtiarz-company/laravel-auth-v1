@@ -1,26 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Providers;
+
+use function app;
+use function assert;
+use function config;
 
 class AppsProvider
 {
-    //
-
-    public const COMMANDS = [
-        // 
-    ];
+    public const COMMANDS = [];
 
     /**
      * Register config
-     *
-     * @return void
      */
     public function registerConfig(): void
     {
-        /** @var DataProvider $dataProvider */
         $dataProvider = app(DataProvider::class);
+        assert($dataProvider instanceof DataProvider);
 
-        foreach ($dataProvider->registerConfig() as $key => $register)
+        foreach ($dataProvider->registerConfig() as $key => $register) {
             config($register);
+        }
     }
 }

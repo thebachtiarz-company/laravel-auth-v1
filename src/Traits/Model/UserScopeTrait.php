@@ -1,25 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TheBachtiarz\Auth\Traits\Model;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use TheBachtiarz\Auth\Interfaces\Config\AuthConfigInterface;
 
+use function tbauthconfig;
+
 /**
  * User Scope Trait
  */
 trait UserScopeTrait
 {
-    //
-
     // ? Public Methods
+
     /**
      * Get by identifier
-     *
-     * @param Builder $builder
-     * @param string $identifier
-     * @return Builder
      */
     public function scopeGetByIdentifier(Builder $builder, string $identifier): Builder
     {
