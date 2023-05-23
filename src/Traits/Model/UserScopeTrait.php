@@ -23,9 +23,9 @@ trait UserScopeTrait
      */
     public function scopeGetByIdentifier(Builder $builder, string $identifier): Builder
     {
-        $_identifier = tbconfigvalue(AuthConfigInterface::CONFIG_NAME . '.' . AuthConfigInterface::IDENTITY_METHOD);
+        $attribute = tbauthconfig(AuthConfigInterface::IDENTITY_METHOD, false);
 
-        return $builder->where(DB::raw("BINARY `$_identifier`"), $identifier);
+        return $builder->where(DB::raw("BINARY `$attribute`"), $identifier);
     }
 
     // ? Private Methods

@@ -22,11 +22,11 @@ class UserRepository extends AbstractRepository
      */
     public function getById(int $id): UserInterface
     {
-        $_user = User::find($id);
+        $user = User::find($id);
 
-        if (!$_user) throw new ModelNotFoundException("User with id '$id' not found");
+        if (!$user) throw new ModelNotFoundException("User with id '$id' not found");
 
-        return $_user;
+        return $user;
     }
 
     /**
@@ -37,11 +37,11 @@ class UserRepository extends AbstractRepository
      */
     public function getByIdentifier(string $identifier): UserInterface
     {
-        $_user = User::getByIdentifier($identifier)->first();
+        $user = User::getByIdentifier($identifier)->first();
 
-        if (!$_user) throw new ModelNotFoundException(sprintf("User with %s '%s' not found", tbauthconfig(AuthConfigInterface::IDENTITY_METHOD), $identifier));
+        if (!$user) throw new ModelNotFoundException(sprintf("User with %s '%s' not found", tbauthconfig(AuthConfigInterface::IDENTITY_METHOD), $identifier));
 
-        return $_user;
+        return $user;
     }
 
     /**
@@ -53,12 +53,12 @@ class UserRepository extends AbstractRepository
     public function create(UserInterface $userInterface): UserInterface
     {
         /** @var Model $userInterface */
-        /** @var UserInterface $_create */
-        $_create = $this->createFromModel($userInterface);
+        /** @var UserInterface $create */
+        $create = $this->createFromModel($userInterface);
 
-        if (!$_create) throw new ModelNotFoundException("Failed to create new user");
+        if (!$create) throw new ModelNotFoundException("Failed to create new user");
 
-        return $_create;
+        return $create;
     }
 
     /**
@@ -70,9 +70,9 @@ class UserRepository extends AbstractRepository
     public function save(UserInterface $userInterface): UserInterface
     {
         /** @var Model|UserInterface $userInterface */
-        $_user = $userInterface->save();
+        $user = $userInterface->save();
 
-        if (!$_user) throw new ModelNotFoundException("Failed to save current user");
+        if (!$user) throw new ModelNotFoundException("Failed to save current user");
 
         return $userInterface;
     }
@@ -85,10 +85,10 @@ class UserRepository extends AbstractRepository
      */
     public function deleteById(int $id): bool
     {
-        /** @var Model|UserInterface $_user */
-        $_user = $this->getById($id);
+        /** @var Model $user */
+        $user = $this->getById($id);
 
-        return $_user->delete();
+        return $user->delete();
     }
 
     /**
@@ -99,10 +99,10 @@ class UserRepository extends AbstractRepository
      */
     public function deleteByIdentifier(string $identifier): bool
     {
-        /** @var Model|UserInterface $_user */
-        $_user = $this->getByIdentifier($identifier);
+        /** @var Model|UserInterface $user */
+        $user = $this->getByIdentifier($identifier);
 
-        return $this->deleteById($_user->getId());
+        return $this->deleteById($user->getId());
     }
 
     // ? Private Methods

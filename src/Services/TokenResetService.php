@@ -48,19 +48,19 @@ class TokenResetService extends AbstractService
             /** @var UserInterface $user */
             $user = $this->userRepository->getByIdentifier($userIdentifier);
 
-            /** @var TokenResetInterface $_tokenResetPrepare */
-            $_tokenResetPrepare = (new TokenReset)
+            /** @var TokenResetInterface $tokenResetPrepare */
+            $tokenResetPrepare = (new TokenReset)
                 ->setToken(Str::uuid()->toString())
                 ->setUserIdentifier($user->getEmail())
                 ->setExpiresAt(CarbonHelper::dbGetFullDateAddHours());
 
-            $result = $this->tokenResetRepository->create($_tokenResetPrepare);
+            $result = $this->tokenResetRepository->create($tokenResetPrepare);
 
             // TODO: email service
 
             $this->setResponseData(
-                'Successfully create token reset',
-                [
+                message: 'Successfully create token reset',
+                data: [
                     'email' => $result->getUserIdentifier(),
                     'expires' => CarbonHelper::anyConvDateToTimestamp($result->getExpiresAt())
                 ]

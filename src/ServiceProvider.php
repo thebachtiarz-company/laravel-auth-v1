@@ -15,12 +15,10 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register(): void
     {
-        $container = \Illuminate\Container\Container::getInstance();
+        /** @var AppsProvider $appsProvider */
+        $appsProvider = app(AppsProvider::class);
 
-        /** @var AppsProvider $_appsProvider */
-        $_appsProvider = $container->make(AppsProvider::class);
-
-        $_appsProvider->registerConfig();
+        $appsProvider->registerConfig();
 
         if ($this->app->runningInConsole()) {
             $this->commands(AppsProvider::COMMANDS);
@@ -35,13 +33,11 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot(): void
     {
         if (app()->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/' . AuthConfigInterface::CONFIG_NAME . '.php' => config_path(AuthConfigInterface::CONFIG_NAME . '.php'),
-            ], 'thebachtiarz-auth-config');
+            $configName = AuthConfigInterface::CONFIG_NAME;
+            $publishName = 'thebachtiarz-auth';
 
-            $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ], 'thebachtiarz-auth-migrations');
+            $this->publishes([__DIR__ . "/../config/$configName.php" => config_path("$configName.php")], "$publishName-config");
+            $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], "$publishName-migrations");
         }
     }
 }

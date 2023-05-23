@@ -17,12 +17,10 @@ class AppsProvider
      */
     public function registerConfig(): void
     {
-        $container = \Illuminate\Container\Container::getInstance();
+        /** @var DataProvider $dataProvider */
+        $dataProvider = app(DataProvider::class);
 
-        /** @var DataProvider $_dataProvider */
-        $_dataProvider = $container->make(DataProvider::class);
-
-        foreach ($_dataProvider->registerConfig() as $key => $register)
+        foreach ($dataProvider->registerConfig() as $key => $register)
             config($register);
     }
 }

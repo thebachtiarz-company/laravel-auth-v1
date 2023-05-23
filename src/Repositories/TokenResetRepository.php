@@ -100,7 +100,7 @@ class TokenResetRepository extends AbstractRepository
      */
     public function deleteById(int $id): bool
     {
-        /** @var Model|TokenResetInterface $token */
+        /** @var Model $token */
         $token = $this->getById($id);
 
         return $token->delete();
@@ -114,10 +114,10 @@ class TokenResetRepository extends AbstractRepository
      */
     public function deleteByToken(string $token): bool
     {
-        /** @var TokenResetInterface $_token */
-        $_token = $this->getByToken($token);
+        /** @var TokenResetInterface $tokenReset */
+        $tokenReset = $this->getByToken($token);
 
-        return $this->deleteById($_token->getId());
+        return $this->deleteById($tokenReset->getId());
     }
 
     /**

@@ -53,34 +53,34 @@ class UserService extends AbstractService
     public function createNewUser(UserCreateDataInterface $userCreateDataInterface): array
     {
         try {
-            $_userPrepare = new User;
+            $userPrepare = new User;
 
             $checkUserExist = $this->checkUserExistByIdentifier($userCreateDataInterface->getIdentifier());
             if ($checkUserExist) throw new \Exception(sprintf(
                 "User with %s '%s' already exist",
-                tbconfigvalue(AuthConfigInterface::CONFIG_NAME . '.' . AuthConfigInterface::IDENTITY_METHOD),
+                tbauthconfig(AuthConfigInterface::IDENTITY_METHOD, false),
                 $userCreateDataInterface->getIdentifier()
             ));
 
-            switch (tbconfigvalue(AuthConfigInterface::CONFIG_NAME . '.' . AuthConfigInterface::IDENTITY_METHOD)) {
+            switch (tbauthconfig(AuthConfigInterface::IDENTITY_METHOD, false)) {
                 case UserInterface::ATTRIBUTE_EMAIL:
-                    $_userPrepare->setEmail($userCreateDataInterface->getIdentifier());
+                    $userPrepare->setEmail($userCreateDataInterface->getIdentifier());
                     break;
                 case UserInterface::ATTRIBUTE_USERNAME:
-                    $_userPrepare->setUsername($userCreateDataInterface->getIdentifier());
+                    $userPrepare->setUsername($userCreateDataInterface->getIdentifier());
                     break;
                 default:
                     break;
             }
 
-            $_userPrepare->setPassword($userCreateDataInterface->getPassword());
+            $userPrepare->setPassword($userCreateDataInterface->getPassword());
 
             /** @var UserInterface $create */
-            $create = $this->userRepository->create($_userPrepare);
+            $create = $this->userRepository->create($userPrepare);
 
             $result = [];
 
-            switch (tbconfigvalue(AuthConfigInterface::CONFIG_NAME . '.' . AuthConfigInterface::IDENTITY_METHOD)) {
+            switch (tbauthconfig(AuthConfigInterface::IDENTITY_METHOD, false)) {
                 case UserInterface::ATTRIBUTE_EMAIL:
                     $result[UserInterface::ATTRIBUTE_EMAIL] = $create->getEmail();
                     break;
@@ -96,7 +96,7 @@ class UserService extends AbstractService
                 $userCreateDataInterface->getPassword(false)
             );
 
-            $this->setResponseData('Successfully create new user', $result);
+            $this->setResponseData(message: 'Successfully create new user', data: $result);
 
             return $result;
         } catch (\Throwable $th) {
@@ -114,8 +114,6 @@ class UserService extends AbstractService
      */
     public function passwordUpdate(UserPasswordUpdateDataInterface $userPasswordUpdateDataInterface): array
     {
-        $result = ['status' => false, 'message' => '', 'data' => null];
-
         try {
             /** @var UserInterface $user */
             $user = $this->userRepository->getByIdentifier($userPasswordUpdateDataInterface->getIdentifier());
@@ -125,19 +123,16 @@ class UserService extends AbstractService
 
             $user->setPassword($userPasswordUpdateDataInterface->getPassword());
 
-            $result['status'] = !!$this->userRepository->save($user);
+            $process = $this->userRepository->save($user);
 
             $this->revokeUserTokens($user);
 
-            $this->setResponseData(sprintf('%s update user password', $result ? 'Successfully' : 'Failed to'));
-
-            return $result;
+            $this->setResponseData(message: sprintf('%s update user password', !!$process ? 'Successfully' : 'Failed to'));
+            return $this->serviceResult(status: !!$process, message: sprintf('%s update user password', !!$process ? 'Successfully' : 'Failed to'));
         } catch (\Throwable $th) {
             $this->log($th);
-            $result['message'] = $th->getMessage();
             $this->setResponseData(message: $th->getMessage(), status: 'error', httpCode: 202);
-
-            return $result;
+            return $this->serviceResult(message: $th->getMessage());
         }
     }
 
@@ -149,8 +144,6 @@ class UserService extends AbstractService
      */
     public function passwordReset(UserPasswordResetDataInterface $userPasswordResetDataInterface): array
     {
-        $result = ['status' => false, 'message' => '', 'data' => null];
-
         try {
             /** @var TokenResetInterface $tokenReset */
             $tokenReset = $this->tokenResetRepository->getByToken($userPasswordResetDataInterface->getToken());
@@ -167,7 +160,7 @@ class UserService extends AbstractService
             $user = $this->userRepository->getByIdentifier($tokenReset->getUserIdentifier());
             $user->setPassword($userPasswordResetDataInterface->getPassword());
 
-            $result['status'] = !!$this->userRepository->save($user);
+            $process = $this->userRepository->save($user);
 
             /**
              * Delete token reset by user identifier
@@ -176,15 +169,12 @@ class UserService extends AbstractService
 
             $this->revokeUserTokens($user);
 
-            $this->setResponseData(sprintf('%s reset user password', $result['status'] ? 'Successfully' : 'Failed to'));
-
-            return $result;
+            $this->setResponseData(sprintf('%s reset user password', !!$process ? 'Successfully' : 'Failed to'));
+            return $this->serviceResult(status: !!$process, message: sprintf('%s reset user password', !!$process ? 'Successfully' : 'Failed to'));
         } catch (\Throwable $th) {
             $this->log($th);
-            $result['message'] = $th->getMessage();
             $this->setResponseData(message: $th->getMessage(), status: 'error', httpCode: 202);
-
-            return $result;
+            return $this->serviceResult(message: $th->getMessage());
         }
     }
 

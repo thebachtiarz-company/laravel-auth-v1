@@ -42,9 +42,9 @@ class PersonalAccessTokenRepository extends AbstractRepository
     {
         $this->authenticate();
 
-        $_collection = PersonalAccessToken::getOwnTokens($this->currentUser);
+        $collection = PersonalAccessToken::getOwnTokens($this->currentUser);
 
-        return $_collection->get();
+        return $collection->get();
     }
 
     /**
@@ -57,9 +57,9 @@ class PersonalAccessTokenRepository extends AbstractRepository
     {
         $this->authenticate();
 
-        $_token = PersonalAccessToken::getOwnTokenByName($this->currentUser, $tokenName)->first();
+        $token = PersonalAccessToken::getOwnTokenByName($this->currentUser, $tokenName)->first();
 
-        return $_token;
+        return $token;
     }
 
     /**
@@ -73,12 +73,12 @@ class PersonalAccessTokenRepository extends AbstractRepository
         $this->authenticate();
 
         /** @var User $userInterface */
-        $_create = $userInterface->createToken(
+        $create = $userInterface->createToken(
             name: Str::uuid()->toString(),
             expiresAt: $userInterface->getTokenExpiresAt()
         );
 
-        return $_create;
+        return $create;
     }
 
     /**
@@ -89,10 +89,10 @@ class PersonalAccessTokenRepository extends AbstractRepository
      */
     public function deleteByName(string $tokenName): bool
     {
-        /** @var PersonalAccessToken|null $_token */
-        $_token = $this->getByName($tokenName);
+        /** @var PersonalAccessToken|null $token */
+        $token = $this->getByName($tokenName);
 
-        return $_token?->delete() ?? false;
+        return $token?->delete() ?? false;
     }
 
     // ? Protected Methods
@@ -105,7 +105,9 @@ class PersonalAccessTokenRepository extends AbstractRepository
     protected function authenticate(): void
     {
         if (!$this->currentUser) {
-            if (!Auth::hasUser()) throw new AuthenticationException();
+            if (!Auth::hasUser()) {
+                throw new AuthenticationException();
+            }
 
             $this->currentUser = $this->getCurrentUserSession();
         }
@@ -119,7 +121,7 @@ class PersonalAccessTokenRepository extends AbstractRepository
     protected function getCurrentUserSession(): UserInterface
     {
         /** @var \TheBachtiarz\Auth\Repositories\UserRepository $userRepository */
-        $userRepository = \Illuminate\Container\Container::getInstance()->make(\TheBachtiarz\Auth\Repositories\UserRepository::class);
+        $userRepository = app(\TheBachtiarz\Auth\Repositories\UserRepository::class);
 
         return $userRepository->getById(Auth::user()->id);
     }

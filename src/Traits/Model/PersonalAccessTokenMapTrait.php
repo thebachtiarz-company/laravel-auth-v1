@@ -18,19 +18,10 @@ trait PersonalAccessTokenMapTrait
      * @param array $returnAttributes
      * @return array
      */
-    public function simpleListMap(
-        array $returnAttributes = [
-            PersonalAccessTokenInterface::ATTRIBUTE_NAME,
-            PersonalAccessTokenInterface::ATTRIBUTE_LASTUSEDAT,
-            PersonalAccessTokenInterface::ATTRIBUTE_EXPIRESAT,
-            'created_at'
-        ]
-    ): array {
-        /**
-         * @var PersonalAccessTokenInterface $this
-         */
-
-        $_data = [
+    public function simpleListMap(array $returnAttributes = [PersonalAccessTokenInterface::ATTRIBUTE_NAME, PersonalAccessTokenInterface::ATTRIBUTE_LASTUSEDAT, PersonalAccessTokenInterface::ATTRIBUTE_EXPIRESAT, 'created_at']): array
+    {
+        /** @var PersonalAccessTokenInterface $this */
+        $data = [
             PersonalAccessTokenInterface::ATTRIBUTE_ID => $this->getId(),
             PersonalAccessTokenInterface::ATTRIBUTE_TOKENABLETYPE => $this->getTokenableType(),
             PersonalAccessTokenInterface::ATTRIBUTE_TOKENABLEID => $this->getTokenableId(),
@@ -42,12 +33,12 @@ trait PersonalAccessTokenMapTrait
             'created_at' => CarbonHelper::anyConvDateToTimestamp($this->created_at)
         ];
 
-        $_result = [];
+        $result = [];
 
         foreach ($returnAttributes as $key => $attribute) {
-            if (@$_data[$attribute]) $_result[$attribute] = $_data[$attribute];
+            if (@$data[$attribute]) $result[$attribute] = $data[$attribute];
         }
 
-        return $_result;
+        return $result;
     }
 }
